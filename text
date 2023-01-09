@@ -1,0 +1,129 @@
+
+        <SlSelect required label="Select Region/State Code">
+            {
+                stateList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`sl${i}`} value={item.stateCode}>{item.stateCode}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+            {/* Transportation Zone Mapping */}
+
+        <SlSelect required label="Select Transportation Zone">
+            {
+                transportationZoneList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`tz${i}`}value={item.transportationZone}>{item.transportationZone}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+        <SlInput pattern = '^[0-9]+$' required maxlength ={40}label = 'mobile number'/>
+        <SlInput required type='email' label = 'E-Mail ID' onSlChange={(e)=>{
+                console.log(e.target.value);
+        }}/>
+            
+{/*         Company Code Mapping */}
+        
+        <SlSelect required label="Company Code">
+           
+        </SlSelect>
+
+{/*             Reconciliation Account mapping */}
+
+        <SlSelect required label="Reconciliation A/C">
+            {
+                reconciliationAccountList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`ra${i}`} value={item.reconciliationAccount}>{item.reconciliationAccount}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+{/*             Pay Term Mapping */}
+
+        <SlSelect required label="Pay Term">
+            {
+                payTermList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`pt${i}`} value={item.payTerm}>{item.payTerm}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+{/*             Sales Organization Mapping */}
+
+        <SlSelect required label="Sales Organization">
+            {
+                salesOrgList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`so${i}`} value={item.salesOrg}>{item.salesOrg}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+{/*         Distribution channel Mapping */}
+
+        <SlSelect required label="Distribution Channel">
+            {
+                distChannelList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`dcl${i}`} value={item.distChannel}>{item.distChannel}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+{/*         Division Mapping */}
+
+        <SlSelect required label="Divison">
+            {
+                divisionList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`divl${i}`} value={item.division}>{item.division}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+{/*             Sales District Mapping */}
+
+        <SlSelect required label="Sales District">
+            {
+                districtNameList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`dn${i}`} value={item.districtName}>{item.districtName}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+{/*             Customer Account Group Mapping */}
+
+        <SlSelect required label="Customer Account Group">
+            {
+                customerAccountGroupList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`cag${i}`} value={item.customerGroup}>{item.customerGroup}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
+
+{/*             Sales Office Mapping */}
+
+        <SlSelect required label="Sales Office and Delivery Plant">
+            {
+                salesOfficeList?.map((item,i)=>{
+                    return(
+                        <SlMenuItem id={`sol${i}`} value={item.salesOffice}>{item.salesOffice}</SlMenuItem>
+                    )
+                })
+            }
+        </SlSelect>
