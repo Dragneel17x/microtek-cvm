@@ -1,11 +1,12 @@
-import { SlButton, SlDialog } from "@shoelace-style/shoelace/dist/react";
+import { SlButton, SlDialog, SlTag } from "@shoelace-style/shoelace/dist/react";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import React, { useEffect, useState } from "react";
 import { baseurl } from "../../config/apiConfig";
 
-function Approval() {
-	useEffect(() => {
+
+function View() {
+    useEffect(() => {
 		getApprovals();
 	}, []);
 
@@ -20,7 +21,7 @@ function Approval() {
 		console.log(data);
 		axios({
 			method: "post",
-			url: `${baseurl.base_url}/cvm/get-approval-forms`,
+			url: `${baseurl.base_url}/cvm/get-submission-view`,
 			//url: `${baseurl.base_url}/cvm/get-approval-forms`,
 			header: {
 				"Content-type": "application/JSON",
@@ -35,33 +36,6 @@ function Approval() {
 				console.log(err);
 			});
 	}
-	function changeRequestStatus(status) {
-		const data = {
-			status: status,
-			approver_remarks: "OK",
-			employee_id: localStorage.getItem("employee_id"),
-			approval_id: singleApproval?.approval_id,
-		};
-		console.log(data);
-		axios({
-			method: "post",
-			url: `${baseurl.base_url}/cvm/approve-form`,
-			//url: `${baseurl.base_url}/cvm/approve-form`,
-			header: {
-				"Content-type": "application/JSON",
-			},
-			data,
-		})
-			.then((res) => {
-				console.log(res);
-				getApprovals();
-				setApprovalDialog(false)
-			})
-			.catch((err) => {
-				console.log(err);
-				setApprovalDialog(false)
-			});
-	}
 	
 	const options = {
 		onRowClick: function (rowData, rowMeta) {
@@ -69,20 +43,21 @@ function Approval() {
 			setSingleApproval(approvals[rowMeta.dataIndex]);
 			setApprovalDialog(true);
 		},
+        selectableRowsHideCheckboxes: true
 	};
 	const columns = [
-		{ name: "applied_by", label: "Applied By" },
+		{ name: "created_by", label: "Applied By" },
 		{ name: "customer_name", label: "Customer Name" },
 		{ name: "company_code", label: "Company Code" },
-		{ name: "approval_id", label: "Approval ID" },
-		{ name: "request_id", label: "Request ID" },
-		{ name: "request_type", label: "Request Type" },
-		{ name: "created_at", label: "Request Date" },
+		{ name: "mobile_no", label: "Mobile Number" },
+		{ name: "approver_employee_id", label: "Approver ID" },
+        { name: "ai_status", label: "Approval Status" },
+        { name: "status", label: "Overall Status" },
 	];
 	return (
 		<div>
 			<MUIDataTable options={options} title="Approvals" data={approvals} columns={columns} />
-			<SlDialog label="Dialog" open={approvalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setApprovalDialog(false)}>
+			<SlDialog label="Form Data" open={approvalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setApprovalDialog(false)}>
 			<div>
 					<h4>
 						Customer Group: <span>{singleApproval?.customer_group}</span>
@@ -163,26 +138,8 @@ function Approval() {
 						PAN: <span>{singleApproval?.pan_number}</span>
 					</h4>
 				</div>
-				<SlButton
-					slot="footer"
-					style={{ marginRight: "20px" }}
-					variant="success"
-					onClick={() => {
-						changeRequestStatus("approved");
-					}}
-				>
-					Approve
-				</SlButton>
-				<SlButton
-					slot="footer"
-					style={{ marginRight: "20px" }}
-					variant="danger"
-					onClick={() => {
-						changeRequestStatus("rejected");
-					}}
-				>
-					Reject
-				</SlButton>
+                <SlTag slot="footer" size="large" pill style={{"marginRight":"20px"}} variant={singleApproval?.status == 'pending'? 'primary': (singleApproval?.status == 'rejected'? 'danger': 'success')}>{singleApproval?.status}</SlTag>
+                <SlTag slot="footer" size="large" pill style={{"marginRight":"20px"}} variant={singleApproval?.ai_status == 'pending'? 'primary': (singleApproval?.ai_status == 'rejected'? 'danger': singleApproval?.ai_status == 'future_approval'? 'neutral':'success')}>{singleApproval?.ai_status}</SlTag>
 				<SlButton slot="footer" variant="primary" onClick={() => setApprovalDialog(false)}>
 					Close
 				</SlButton>
@@ -191,4 +148,4 @@ function Approval() {
 	);
 }
 
-export default Approval;
+export default View
