@@ -8,5 +8,5 @@ export const baseurl ={
       //base_url: "http://10.255.38.26:8080/v1/api",
       //base_url:"http://192.168.0.128:8080/v1/api",
       // base_url:"http://192.168.137.124:8080/v1/api",
-    
+      //base_url: "localhost:8082/v1/api"
     }
