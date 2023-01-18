@@ -82,7 +82,7 @@ function Form() {
 					postal_code: pincode,
 					city: res.data.data.city,
 					district: res.data.data.district,
-          state_code: res.data.data.state
+          			state_code: res.data.data.state
 				});
 				if (formData.country != "India") {
 					setError({ ...error, ["postal_code"]: false });
@@ -109,10 +109,10 @@ function Form() {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-    if(!(formData.DAPF && formData.GST_Image && formData.PAN_Image && formData.blank_cheque)){
+    /* if(!(formData.DAPF && formData.GST_Image && formData.PAN_Image && formData.blank_cheque)){
       toast.error("you must uploads all Files in upload Section");
       return;
-    }
+    } */
 		setConfirmDialog(true);
 	}
 
@@ -891,9 +891,10 @@ function Form() {
 
 				{formData.cust_group == "ZEXP - export customer" ? (
 					""
-				) : formData.cust_group == "ZINC - individual customer" ? (
+				) : formData.cust_group == "ZINC - individual customer" || formData.cust_group == "ZSHP - goods recipient" ? (
 					<SlInput
 						label="GSTIN"
+						required = {false}
 						pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$"
 						className="helptext"
 						name="gstin"
@@ -907,6 +908,7 @@ function Form() {
 				) : (
 					<SlInput
 						label="GSTIN"
+						pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$"
 						required
 						className="helptext"
 						name="gstin"
@@ -922,13 +924,13 @@ function Form() {
 				{/*           PAN Number */}
 				{formData.cust_group == "ZEXP - export customer" ? (
 					""
-				) : formData.cust_group != "ZINC - individual customer" ? (
+				) : formData.cust_group != "ZINC - individual customer" ? formData.cust_group == "ZSHP - goods recipient" ? (
 					<SlInput
 						label="PAN Number"
 						required={true}
 						className="helptext"
 						name="pan"
-						disabled={true}
+						disabled={false}
 						value={formData.pan}
 						helpText={error.pan ? "" : "Wrong Entry"}
 						pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
@@ -937,7 +939,22 @@ function Form() {
 							setFormData({ ...formData, pan: e.target.value });
 						}}
 					/>
-				) : (
+				) :
+				(<SlInput
+					label="PAN Number"
+					required={true}
+					className="helptext"
+					name="pan"
+					disabled={true}
+					value={formData.pan}
+					helpText={error.pan ? "" : "Wrong Entry"}
+					pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
+					onSlInput={(e) => {
+						validCheck(e.target.name, e.target.value);
+						setFormData({ ...formData, pan: e.target.value });
+					}}
+				/>):
+				(
 					<SlInput
 						label="PAN Number"
 						required={false}

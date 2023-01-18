@@ -110,6 +110,13 @@ function Navbar() {
 								>
 									View Submittions
 								</SlMenuItem>
+								<SlMenuItem
+									onClick={() => {
+										navigate("/vendor-form");
+									}}
+								>
+									Vendor Form
+								</SlMenuItem>
 							</SlMenu>
 						</SlDropdown>
 						<SlDropdown distance={5} className="nav-item">

@@ -19,7 +19,7 @@ setBasePath("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.87
 function App() {
 	let navigate = useNavigate();
 	useEffect(() => {
-		verifyToken();
+		//verifyToken();
 	}, []);
 	const verifyToken = () => {
 		if (!localStorage.getItem("token")) {

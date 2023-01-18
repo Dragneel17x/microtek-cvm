@@ -53,6 +53,7 @@ function Login() {
 				const data = {
 					employee_id: response.data.new_e_code,
 				};
+				console.log(data);
 				axios({
 					method: "post",
 					url: `${baseurl.base_url}/mhere/get-employee-module-access`,
@@ -101,7 +102,7 @@ function Login() {
 					});
 			})
 			.catch(function (err) {
-				toast.error(err.response.data.message);
+				//toast.error(err.response.data.message);
 
 				console.log(err);
 				document.getElementById("login-button").disabled = false;
