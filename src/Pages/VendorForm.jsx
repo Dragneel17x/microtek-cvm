@@ -106,6 +106,7 @@ function Form() {
     event.preventDefault();
     //alert("All fields are valid!");
     setConfirmDialog(true);
+    
   }
 
   useQuery("get-vendor-grp", () => {
@@ -257,7 +258,7 @@ function Form() {
     /*    ind_cust_num: /^[0-9]{10}$/,
        local_cust_num: /^[0-9]{10}$/,
        intl_cust_num: /^[0-9]+$/, */
-    gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$/,
+    gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$/,
     pan: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
     bank_acc_no: /^[0-9]+$/,
     ifsc_code: /^[A-Z]{4}0([A-Z]|[0-9]){6}$/
