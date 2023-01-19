@@ -973,7 +973,7 @@ function Form() {
 					<SlInput
 						label="GSTIN"
 						required={false}
-						pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$"
+						pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$"
 						className="helptext"
 						name="gstin"
 						helpText={error.gstin ? "" : "wrong Entry"}
@@ -986,7 +986,7 @@ function Form() {
 				) : (
 					<SlInput
 						label="GSTIN"
-						pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$"
+						pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$"
 						required
 						className="helptext"
 						name="gstin"
