@@ -29,7 +29,7 @@ function View() {
 			data,
 		})
 			.then((res) => {
-				console.log(res);
+				console.log(res.data.data);
 				setApprovals(res.data.data);
 			})
 			.catch((err) => {
@@ -136,6 +136,9 @@ function View() {
 					</h4>
 					<h4>
 						PAN: <span>{singleApproval?.pan_number}</span>
+					</h4>
+					<h4>
+						Remarks: <span>{singleApproval?.approver_remarks}</span>
 					</h4>
 				</div>
                 <SlTag slot="footer" size="large" pill style={{"marginRight":"20px"}} variant={singleApproval?.status == 'pending'? 'primary': (singleApproval?.status == 'rejected'? 'danger': 'success')}>{singleApproval?.status}</SlTag>
