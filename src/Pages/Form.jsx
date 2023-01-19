@@ -55,7 +55,7 @@ function Form() {
 		sales_office: "",
 		gstin: "",
 		pan: "",
-		employee_id: "57055",
+		employee_id: localStorage.getItem("employee_id"),
 		blank_cheque: "",
 		GST_Image: "",
 		PAN_Image: "",
@@ -372,7 +372,7 @@ function Form() {
 		ind_cust_num: /^[0-9]{10}$/,
 		local_cust_num: /^[0-9]{10}$/,
 		intl_cust_num: /^[0-9]+$/,
-		gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$/,
+		gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$/,
 		pan: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
 	};
 
