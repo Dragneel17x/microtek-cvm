@@ -1,4 +1,4 @@
-import { SlButton, SlDialog } from "@shoelace-style/shoelace/dist/react";
+import { SlButton, SlDialog, SlInput } from "@shoelace-style/shoelace/dist/react";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import React, { useEffect, useState } from "react";
@@ -38,7 +38,7 @@ function Approval() {
 	function changeRequestStatus(status) {
 		const data = {
 			status: status,
-			approver_remarks: "OK",
+			approver_remarks: approverRemark,
 			employee_id: localStorage.getItem("employee_id"),
 			approval_id: singleApproval?.approval_id,
 		};
@@ -79,6 +79,7 @@ function Approval() {
 		{ name: "request_type", label: "Request Type" },
 		{ name: "created_at", label: "Request Date" },
 	];
+	const [approverRemark, setApproverRemark] = useState("");
 	return (
 		<div>
 			<MUIDataTable options={options} title="Approvals" data={approvals} columns={columns} />
@@ -163,10 +164,23 @@ function Approval() {
 						PAN: <span>{singleApproval?.pan_number}</span>
 					</h4>
 				</div>
+
+					<SlInput
+						className="helptext"
+						name="approver_remark"
+						value={approverRemark}
+						onSlInput={(e) => {
+							setApproverRemark(e.target.value)
+						}}
+						style={{marginTop:"20px"}}
+						label="Remarks"
+					/>
+
 				<SlButton
 					slot="footer"
 					style={{ marginRight: "20px" }}
 					variant="success"
+					disabled = {approverRemark? false : true}
 					onClick={() => {
 						changeRequestStatus("approved");
 					}}
@@ -176,6 +190,7 @@ function Approval() {
 				<SlButton
 					slot="footer"
 					style={{ marginRight: "20px" }}
+					disabled = {approverRemark?.toLowerCase().replaceAll(" ", "") == "ok" || approverRemark == "" ? true : false}
 					variant="danger"
 					onClick={() => {
 						changeRequestStatus("rejected");

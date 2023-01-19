@@ -54,6 +54,7 @@ function Form() {
 		customer_acc_group: "",
 		sales_office: "",
 		gstin: "",
+		tan_number: "",
 		pan: "",
 		employee_id: localStorage.getItem("employee_id"),
 		blank_cheque: "",
@@ -82,7 +83,7 @@ function Form() {
 					postal_code: pincode,
 					city: res.data.data.city,
 					district: res.data.data.district,
-          			state_code: res.data.data.state
+					state_code: res.data.data.state
 				});
 				if (formData.country != "India") {
 					setError({ ...error, ["postal_code"]: false });
@@ -109,10 +110,10 @@ function Form() {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-    /* if(!(formData.DAPF && formData.GST_Image && formData.PAN_Image && formData.blank_cheque)){
-      toast.error("you must uploads all Files in upload Section");
-      return;
-    } */
+		/* if(!(formData.DAPF && formData.GST_Image && formData.PAN_Image && formData.blank_cheque)){
+		  toast.error("you must uploads all Files in upload Section");
+		  return;
+		} */
 		setConfirmDialog(true);
 	}
 
@@ -361,6 +362,7 @@ function Form() {
 		intl_cust_num: true,
 		gstin: true,
 		pan: true,
+		tan_number: true
 	});
 
 	const regexp = {
@@ -372,6 +374,7 @@ function Form() {
 		ind_cust_num: /^[0-9]{10}$/,
 		local_cust_num: /^[0-9]{10}$/,
 		intl_cust_num: /^[0-9]+$/,
+		tan_number: /^.{10}$/,
 		gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$/,
 		pan: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
 	};
@@ -384,6 +387,69 @@ function Form() {
 
 		setError({ ...error, [name]: true });
 	}
+	function sendFormData() {
+		const formDatas = new FormData();
+		Object.keys(formData).forEach((key) => formDatas.append(key, formData[key]));
+		axios({
+			method: "post",
+			url: `${baseurl.base_url}/cvm/post-form-data`,
+			header: {
+				"Content-type": "multipart/form-data",
+			},
+			data: formDatas,
+		})
+			.then((res) => {
+				console.log(res);
+				toast.success("Form Submitted Successfully");
+				setFormData({
+					cust_group: "",
+					cust_name: "",
+					cust_name_op1: "",
+					cust_address: "",
+					cust_address_op1: "",
+					cust_address_op2: "",
+					cust_address_op3: "",
+					district: "",
+					state_code: "",
+					city: "",
+					postal_code: "",
+					country: "India",
+					company_code: "",
+					co_person: "",
+					transportation_zone: "",
+					mobile_no: "",
+					email_id: "",
+					company_code: "",
+					recon_acc: "",
+					pay_term: "",
+					sales_org: "",
+					dist_channel: "",
+					division: "",
+					sales_district: "",
+					customer_acc_group: "",
+					sales_office: "",
+					gstin: "",
+					tan_number: "",
+					pan: "",
+					employee_id: localStorage.getItem("employee_id"),
+					blank_cheque: "",
+					GST_Image: "",
+					PAN_Image: "",
+					declaration: "",
+					DAPF: "",
+					sbu_type: "",
+				})
+			})
+			.catch((err) => {
+				console.log(err);
+				if (err?.response?.data?.message) {
+					toast.error(err?.response?.data?.message)
+				}
+				else {
+					toast.error("Some Un-Expected Error Occured \n Please Try After Some Time");
+				}
+			});
+	}
 	return (
 		<div className="content_main">
 			<form onSubmit={handleSubmit} className="form-main">
@@ -391,6 +457,7 @@ function Form() {
 				<SlSelect
 					required
 					label="Select Customer Group"
+					value = {formData.cust_group}
 					onSlChange={(e) => {
 						setFormData({ ...formData, cust_group: e.target.value });
 					}}
@@ -436,24 +503,28 @@ function Form() {
 				<div className="input-field-main customer_name">
 					<SlInput
 						required
+						value={formData.cust_address}
 						onSlInput={(e) => {
 							setFormData({ ...formData, cust_address: e.target.value });
 						}}
 						label="Customer Address"
 					/>
 					<SlInput
+					value={formData.cust_address_op1}
 						onSlInput={(e) => {
 							setFormData({ ...formData, cust_address_op1: e.target.value });
 						}}
 						label="Address Optional 1"
 					/>
 					<SlInput
+					value={formData.cust_address_op2}
 						onSlInput={(e) => {
 							setFormData({ ...formData, cust_address_op2: e.target.value });
 						}}
 						label="Address optional 2"
 					/>
 					<SlInput
+					value={formData.cust_address_op3}
 						onSlInput={(e) => {
 							setFormData({ ...formData, cust_address_op3: e.target.value });
 						}}
@@ -504,57 +575,57 @@ function Form() {
 							/* let pinData = pincodeMapping.filter(item=>{return(item.pincode == e.target.value)}) */
 
 							/* if(pinData?.length){
-                setFormData({ ...formData, postal_code: e.target.value, city: pinData[0].city, district: pinData[0].district });
-                return
-              }
-              else{
-                setFormData({ ...formData, postal_code: e.target.value, city: "", district: "" });
-                console.log({"invalid pincode" : e.target.value});
-                setError({ ...error, [e.target.name]: false });
-              } */
+				setFormData({ ...formData, postal_code: e.target.value, city: pinData[0].city, district: pinData[0].district });
+				return
+			  }
+			  else{
+				setFormData({ ...formData, postal_code: e.target.value, city: "", district: "" });
+				console.log({"invalid pincode" : e.target.value});
+				setError({ ...error, [e.target.name]: false });
+			  } */
 						}}
 						label="Postal Code"
 					/>
 					{/*           Country */}
 
-          {formData.cust_group == "ZEXP - export customer" ? (
-              <SlSelect
-                required
-                label="Select Country"
-                value={formData.country}
-                disabled={false}
-                onSlInput={(e) => {
-                  setSelectedCountry(e.target.value);
-                  setFormData({ ...formData, country: e.target.value });
-                }}
-              >
-                {countryCodes?.map((item, i) => {
-                  return (
-                    <SlMenuItem key={`${i}c`} value={item.country}>
-                      {item.country}
-                    </SlMenuItem>
-                  );
-                })}
-              </SlSelect>
+					{formData.cust_group == "ZEXP - export customer" ? (
+						<SlSelect
+							required
+							label="Select Country"
+							value={formData.country}
+							disabled={false}
+							onSlInput={(e) => {
+								setSelectedCountry(e.target.value);
+								setFormData({ ...formData, country: e.target.value });
+							}}
+						>
+							{countryCodes?.map((item, i) => {
+								return (
+									<SlMenuItem key={`${i}c`} value={item.country}>
+										{item.country}
+									</SlMenuItem>
+								);
+							})}
+						</SlSelect>
 					) : (
-              <SlSelect
-                required
-                label="Select Country"
-                disabled = {true}
-                value={formData.country}
-                onSlInput={(e) => {
-                  setSelectedCountry(e.target.value);
-                  setFormData({ ...formData, country: e.target.value });
-                }}
-              >
-                {countryCodes?.map((item, i) => {
-                  return (
-                    <SlMenuItem key={`${i}c`} value={item.country}>
-                      {item.country}
-                    </SlMenuItem>
-                  );
-                })}
-              </SlSelect>
+						<SlSelect
+							required
+							label="Select Country"
+							disabled={true}
+							value={formData.country}
+							onSlInput={(e) => {
+								setSelectedCountry(e.target.value);
+								setFormData({ ...formData, country: e.target.value });
+							}}
+						>
+							{countryCodes?.map((item, i) => {
+								return (
+									<SlMenuItem key={`${i}c`} value={item.country}>
+										{item.country}
+									</SlMenuItem>
+								);
+							})}
+						</SlSelect>
 					)}
 
 					{/*                       State/Region Code */}
@@ -562,9 +633,9 @@ function Form() {
 					{formData.cust_group == "ZEXP - export customer" ? (
 						<SlSelect
 							required
-              disabled = {false}
+							disabled={false}
 							label="Select Region/State Code"
-              value={formData.state_code}
+							value={formData.state_code}
 							onSlChange={(e) => {
 								setFormData({ ...formData, state_code: e.target.value });
 							}}
@@ -580,9 +651,9 @@ function Form() {
 					) : (
 						<SlSelect
 							required
-              disabled = {true}
+							disabled={true}
 							label="Select Region/State Code"
-              value={formData.state_code}
+							value={formData.state_code}
 							onSlChange={(e) => {
 								setFormData({ ...formData, state_code: e.target.value });
 							}}
@@ -617,6 +688,7 @@ function Form() {
 				{formData.cust_group != "ZEXP - export customer" ? (
 					<SlSelect
 						required
+						value={formData.transportation_zone}
 						label="Select Transportation Zone"
 						onSlChange={(e) => {
 							setFormData({ ...formData, transportation_zone: e.target.value });
@@ -635,12 +707,6 @@ function Form() {
 				)}
 
 				{/*         Mobile Number  */}
-
-				{/*  {       <PhoneInput
-      country={'us'}
-      value={this.state.phone}
-      onChange={phone => this.setState({ phone })}
-    />} */}
 
 				{formData.cust_group == "ZINC - individual customer" ? (
 					<SlInput
@@ -696,6 +762,7 @@ function Form() {
 						required={false}
 						type="email"
 						label="E-Mail ID"
+						value={formData.email_id}
 						onSlInput={(e) => {
 							setFormData({ ...formData, email_id: e.target.value });
 						}}
@@ -705,6 +772,7 @@ function Form() {
 						required={true}
 						type="email"
 						label="E-Mail ID"
+						value={formData.email_id}
 						onSlInput={(e) => {
 							setFormData({ ...formData, email_id: e.target.value });
 						}}
@@ -716,6 +784,7 @@ function Form() {
 				<SlSelect
 					required
 					label="Company Code"
+					value={formData.company_code}
 					onSlChange={(e) => {
 						setFormData({ ...formData, company_code: e.target.value });
 					}}
@@ -733,6 +802,7 @@ function Form() {
 				<SlSelect
 					required
 					label="Reconciliation A/C"
+					value={formData.recon_acc}
 					onSlChange={(e) => {
 						setFormData({ ...formData, recon_acc: e.target.value });
 					}}
@@ -750,6 +820,7 @@ function Form() {
 
 				<SlSelect
 					required
+					value={formData.pay_term}
 					label="Pay Term"
 					onSlChange={(e) => {
 						setFormData({ ...formData, pay_term: e.target.value });
@@ -768,6 +839,7 @@ function Form() {
 
 				<SlSelect
 					required
+					value={formData.sales_org}
 					label="Sales Organization"
 					onSlChange={(e) => {
 						setFormData({ ...formData, sales_org: e.target.value });
@@ -785,6 +857,7 @@ function Form() {
 				<SlSelect
 					required
 					label="SBU Types"
+					value={formData.sbu_type}
 					onSlChange={(e) => {
 						setFormData({ ...formData, sbu_type: e.target.value });
 					}}
@@ -802,6 +875,7 @@ function Form() {
 				<SlSelect
 					required
 					label="Distribution Channel"
+					value={formData.dist_channel}
 					onSlChange={(e) => {
 						setFormData({ ...formData, dist_channel: e.target.value });
 					}}
@@ -819,6 +893,7 @@ function Form() {
 
 				<SlSelect
 					required
+					value={formData.division}
 					label="Divison"
 					onSlChange={(e) => {
 						setFormData({ ...formData, division: e.target.value });
@@ -837,6 +912,7 @@ function Form() {
 
 				<SlSelect
 					required
+					value={formData.sales_district}
 					label="Sales District"
 					onSlChange={(e) => {
 						setFormData({ ...formData, sales_district: e.target.value });
@@ -855,6 +931,7 @@ function Form() {
 
 				<SlSelect
 					required
+					value={formData.customer_acc_group}
 					label="Customer Account Group"
 					onSlChange={(e) => {
 						setFormData({ ...formData, customer_acc_group: e.target.value });
@@ -873,6 +950,7 @@ function Form() {
 
 				<SlSelect
 					required
+					value={formData.sales_office}
 					label="Sales Office and Delivery Plant"
 					onSlChange={(e) => {
 						setFormData({ ...formData, sales_office: e.target.value });
@@ -894,7 +972,7 @@ function Form() {
 				) : formData.cust_group == "ZINC - individual customer" || formData.cust_group == "ZSHP - goods recipient" ? (
 					<SlInput
 						label="GSTIN"
-						required = {false}
+						required={false}
 						pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$"
 						className="helptext"
 						name="gstin"
@@ -917,9 +995,30 @@ function Form() {
 						onSlInput={(e) => {
 							validCheck(e.target.name, e.target.value);
 							setFormData({ ...formData, gstin: e.target.value, pan: e.target.value?.slice(2, 12) });
+							console.log(formData.gstin);
 						}}
 					/>
 				)}
+
+				{/* 				TAN Number Input  */}
+
+				{formData.cust_group == "ZEXP - export customer" ? ("") : (
+
+					<SlInput
+						label="TAN"
+						required={formData.gstin ? true : false}
+						pattern="^.{10}$"
+						helpText={error.tan_number ? "" : "wrong Entry"}
+						className="helptext"
+						name="tan_number"
+						value={formData.tan_number}
+						onSlInput={(e) => {
+							validCheck(e.target.name, e.target.value);
+							setFormData({ ...formData, tan_number: e.target.value });
+						}}
+					/>)}
+
+
 
 				{/*           PAN Number */}
 				{formData.cust_group == "ZEXP - export customer" ? (
@@ -940,36 +1039,36 @@ function Form() {
 						}}
 					/>
 				) :
-				(<SlInput
-					label="PAN Number"
-					required={true}
-					className="helptext"
-					name="pan"
-					disabled={true}
-					value={formData.pan}
-					helpText={error.pan ? "" : "Wrong Entry"}
-					pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
-					onSlInput={(e) => {
-						validCheck(e.target.name, e.target.value);
-						setFormData({ ...formData, pan: e.target.value });
-					}}
-				/>):
-				(
-					<SlInput
+					(<SlInput
 						label="PAN Number"
-						required={false}
+						required={true}
 						className="helptext"
 						name="pan"
-						disabled={false}
+						disabled={true}
+						value={formData.pan}
 						helpText={error.pan ? "" : "Wrong Entry"}
 						pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
-						value={formData.pan}
 						onSlInput={(e) => {
 							validCheck(e.target.name, e.target.value);
 							setFormData({ ...formData, pan: e.target.value });
 						}}
-					/>
-				)}
+					/>) :
+					(
+						<SlInput
+							label="PAN Number"
+							required={false}
+							className="helptext"
+							name="pan"
+							disabled={false}
+							helpText={error.pan ? "" : "Wrong Entry"}
+							pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
+							value={formData.pan}
+							onSlInput={(e) => {
+								validCheck(e.target.name, e.target.value);
+								setFormData({ ...formData, pan: e.target.value });
+							}}
+						/>
+					)}
 
 				<SlButton
 					type="submit"
@@ -978,24 +1077,6 @@ function Form() {
 						console.log(formData);
 						//setConfirmDialog(true);
 						return;
-						const formDatas = new FormData();
-						Object.keys(formData).forEach((key) => formDatas.append(key, formData[key]));
-						axios({
-							method: "post",
-							url: "${baseurl.base_url}/cvm/post-form-data",
-							header: {
-								"Content-type": "multipart/form-data",
-							},
-							data: formDatas,
-						})
-							.then((res) => {
-								console.log(res);
-							})
-							.catch((err) => {
-								console.log(err);
-							});
-						/* console.log(Object.keys(formData).toString());
-              console.log(Object.values(formData).toString()); */
 					}}
 				>
 					Continue
@@ -1018,7 +1099,7 @@ function Form() {
 					type="file"
 					name=""
 					id=""
-          accept="application/pdf"
+					accept="application/pdf"
 					onChange={(e) => {
 						setFormData({ ...formData, blank_cheque: e.target.files[0] });
 					}}
@@ -1029,7 +1110,7 @@ function Form() {
 					type="file"
 					name=""
 					id=""
-          accept="application/pdf"
+					accept="application/pdf"
 					onChange={(e) => {
 						setFormData({ ...formData, GST_Image: e.target.files[0] });
 					}}
@@ -1040,7 +1121,7 @@ function Form() {
 					type="file"
 					name=""
 					id=""
-          accept="application/pdf"
+					accept="application/pdf"
 					onChange={(e) => {
 						setFormData({ ...formData, PAN_Image: e.target.files[0] });
 					}}
@@ -1051,7 +1132,7 @@ function Form() {
 					type="file"
 					name=""
 					id=""
-          accept="application/pdf"
+					accept="application/pdf"
 					onChange={(e) => {
 						setFormData({ ...formData, declaration: e.target.files[0] });
 					}}
@@ -1061,7 +1142,7 @@ function Form() {
 					style={{ marginBottom: "20px" }}
 					type="file"
 					name=""
-          accept="application/pdf"
+					accept="application/pdf"
 					id=""
 					onChange={(e) => {
 						setFormData({ ...formData, DAPF: e.target.files[0] });
@@ -1169,22 +1250,7 @@ function Form() {
 					disabled={!declarationCheck}
 					onClick={() => {
 						setConfirmDialog(false);
-						const formDatas = new FormData();
-						Object.keys(formData).forEach((key) => formDatas.append(key, formData[key]));
-						axios({
-							method: "post",
-							url: `${baseurl.base_url}/cvm/post-form-data`,
-							header: {
-								"Content-type": "multipart/form-data",
-							},
-							data: formDatas,
-						})
-							.then((res) => {
-								console.log(res);
-							})
-							.catch((err) => {
-								console.log(err);
-							});
+						sendFormData();
 					}}
 				>
 					Submit
