@@ -57,13 +57,12 @@ function Form() {
     ifsc_code: "",
     witholding_tax: "",
     order_currency: "",
-    purchasing_org: ""
+    purchasing_org: "",
     //employee_id: "57055",
-    /*     blank_cheque: "",
-        GST_Image: "",
-        PAN_Image: "",
-        declaration: "",
-        DAPF: "", */
+    blank_cheque: "",
+    GST_Image: "",
+    PAN_Image: "",
+    form_type: "Vendor Form"
   });
 
   const [pincodeMapping, setPincodeMapping] = useState([]);
@@ -255,9 +254,6 @@ function Form() {
     postal_code: /^[0-9]+$/,
     city: /^([A-Z]|[a-z]| )+$/,
     mobile_no: /^[0-9]{10}$/,
-    /*    ind_cust_num: /^[0-9]{10}$/,
-       local_cust_num: /^[0-9]{10}$/,
-       intl_cust_num: /^[0-9]+$/, */
     gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$/,
     pan: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
     bank_acc_no: /^[0-9]+$/,
@@ -812,7 +808,7 @@ function Form() {
               setFormData({ ...formData, PAN_Image: e.target.files[0] });
             }}
           />
-          <input
+{/*           <input
             style={{ marginBottom: "20px" }}
             type="file"
             name=""
@@ -820,8 +816,8 @@ function Form() {
             onChange={(e) => {
               setFormData({ ...formData, declaration: e.target.files[0] });
             }}
-          />
-          <input
+          /> */}
+{/*           <input
             style={{ marginBottom: "20px" }}
             type="file"
             name=""
@@ -829,7 +825,7 @@ function Form() {
             onChange={(e) => {
               setFormData({ ...formData, DAPF: e.target.files[0] });
             }}
-          />
+          /> */}
           <SlButton
             style={{ marginRight: "20px" }}
             slot="footer"
