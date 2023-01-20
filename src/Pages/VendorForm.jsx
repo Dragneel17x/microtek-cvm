@@ -62,7 +62,6 @@ function Form() {
     blank_cheque: "",
     GST_Image: "",
     PAN_Image: "",
-    form_type: "Vendor Form"
   });
 
   const [pincodeMapping, setPincodeMapping] = useState([]);

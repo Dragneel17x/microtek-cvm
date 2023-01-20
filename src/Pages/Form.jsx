@@ -63,7 +63,6 @@ function Form() {
 		declaration: "",
 		DAPF: "",
 		sbu_type: "",
-		form_type: "Customer Form"
 	});
 
 	const [pincodeMapping, setPincodeMapping] = useState([]);
