@@ -16,10 +16,10 @@ import "./Form.css";
 import { useQuery } from "react-query";
 import axios, { Axios } from "axios";
 import { useFetcher } from "react-router-dom";
-//import { baseurl } from "../config/apiConfig";
-const baseurl = {
+import { baseurl } from "../config/apiConfig";
+/* const baseurl = {
   base_url: "http://localhost:8082/v1/api",
-}
+} */
 function Form() {
   const [countryCodes, setCountryCodes] = useState();
   const [stateList, setStateList] = useState();
@@ -104,8 +104,27 @@ function Form() {
     event.preventDefault();
     //alert("All fields are valid!");
     setConfirmDialog(true);
-    
+
   }
+
+  useEffect(() => {
+    console.log("hello");
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-vendor-grp`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setVendorGrp(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  },[])
+  
 
   useQuery("get-vendor-grp", () => {
     axios({
@@ -155,10 +174,10 @@ function Form() {
         console.log(err);
       });
   });
-  useQuery("get-pay-term", () => {
+  useQuery("get-vendor-pay-term", () => {
     axios({
       method: "get",
-      url: `${baseurl.base_url}/cvm/get-pay-term`,
+      url: `${baseurl.base_url}/cvm/get-vendor-pay-term`,
       header: { Content: "application/JSON" },
     })
       .then((res) => {
@@ -178,6 +197,7 @@ function Form() {
       },
     })
       .then((res) => {
+        console.log(res);
         setOrderCurrency(res.data.data);
       })
       .catch((err) => {
@@ -364,7 +384,7 @@ function Form() {
             />)}
 
           {/*City*/}
-          
+
 
           <SlInput
             className="helptext"
@@ -380,7 +400,7 @@ function Form() {
             label="City"
           />
 
-          {/*Postal Code*/} 
+          {/*Postal Code*/}
           <SlInput
             className="helptext"
             pattern="^[0-9]+$"
@@ -411,41 +431,41 @@ function Form() {
           />
           {/*           Country */}
 
-          {formData.vendor_group == "ZIRM - Vendor Import - Raw Material" || formData.vendor_group == "ZIMN -  Vendor Import - Maintainence"?(<SlSelect
-              required
-              disabled = {false}
-              label="Select Country"
-              value={formData.country}
-              onSlInput={(e) => {
-                setSelectedCountry(e.target.value);
-                setFormData({ ...formData, country: e.target.value });
-              }}
-            >
-              {countryCodes?.map((item, i) => {
-                return (
-                  <SlMenuItem key={`${i}c`} value={item.country}>
-                    {item.country}
-                  </SlMenuItem>
-                );
-              })}
-            </SlSelect>):(<SlSelect
-              required
-              disabled={true}
-              label="Select Country"
-              value={"India"}
-              onSlInput={(e) => {
-                setSelectedCountry(e.target.value);
-                setFormData({ ...formData, country: e.target.value });
-              }}
-            >
-              {countryCodes?.map((item, i) => {
-                return (
-                  <SlMenuItem key={`${i}c`} value={item.country}>
-                    {item.country}
-                  </SlMenuItem>
-                );
-              })}
-            </SlSelect>)}
+          {formData.vendor_group == "ZIRM - Vendor Import - Raw Material" || formData.vendor_group == "ZIMN -  Vendor Import - Maintainence" ? (<SlSelect
+            required
+            disabled={false}
+            label="Select Country"
+            value={formData.country}
+            onSlInput={(e) => {
+              setSelectedCountry(e.target.value);
+              setFormData({ ...formData, country: e.target.value });
+            }}
+          >
+            {countryCodes?.map((item, i) => {
+              return (
+                <SlMenuItem key={`${i}c`} value={item.country}>
+                  {item.country}
+                </SlMenuItem>
+              );
+            })}
+          </SlSelect>) : (<SlSelect
+            required
+            disabled={true}
+            label="Select Country"
+            value={"India"}
+            onSlInput={(e) => {
+              setSelectedCountry(e.target.value);
+              setFormData({ ...formData, country: e.target.value });
+            }}
+          >
+            {countryCodes?.map((item, i) => {
+              return (
+                <SlMenuItem key={`${i}c`} value={item.country}>
+                  {item.country}
+                </SlMenuItem>
+              );
+            })}
+          </SlSelect>)}
 
 
           {/*                       State/Region Code */}
@@ -455,7 +475,7 @@ function Form() {
               required
               disabled={true}
               label="Select Region/State Code"
-              value = {formData.state_code}
+              value={formData.state_code}
               onSlChange={(e) => {
                 setFormData({ ...formData, state_code: e.target.value });
               }}
@@ -599,7 +619,7 @@ function Form() {
         </SlSelect>
 
 
-        {/*             Pay Term Mapping */}
+        {/*             Vendor Pay Term Mapping */}
 
         <SlSelect
           required
@@ -718,7 +738,7 @@ function Form() {
 
         {/*         Withholding Tax Input */}
 
-        {formData.vendor_group == "ZDSR - Vendor Domestic - Service "?(        <SlInput
+        {formData.vendor_group == "ZDSR - Vendor Domestic - Service " ? (<SlInput
           label="Withholding Tax"
           required={false}
           className="helptext"
@@ -728,7 +748,7 @@ function Form() {
             validCheck(e.target.name, e.target.value);
             setFormData({ ...formData, witholding_tax: e.target.value });
           }}
-        />):("")}
+        />) : ("")}
 
 
 
@@ -807,7 +827,7 @@ function Form() {
               setFormData({ ...formData, PAN_Image: e.target.files[0] });
             }}
           />
-{/*           <input
+          {/*           <input
             style={{ marginBottom: "20px" }}
             type="file"
             name=""
@@ -816,7 +836,7 @@ function Form() {
               setFormData({ ...formData, declaration: e.target.files[0] });
             }}
           /> */}
-{/*           <input
+          {/*           <input
             style={{ marginBottom: "20px" }}
             type="file"
             name=""

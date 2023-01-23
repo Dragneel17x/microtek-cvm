@@ -16,10 +16,10 @@ import "./Form.css";
 import { useQuery } from "react-query";
 import axios, { Axios } from "axios";
 import { useFetcher } from "react-router-dom";
-//import { baseurl } from "../config/apiConfig";
-const baseurl = {
+import { baseurl } from "../config/apiConfig";
+/* const baseurl = {
   base_url: "http://localhost:8082/v1/api",
-}
+} */
 function Form() {
   const [countryCodes, setCountryCodes] = useState();
   const [stateList, setStateList] = useState();
