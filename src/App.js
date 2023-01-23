@@ -1,6 +1,7 @@
 import "./App.css";
 import Form from "./Pages/Form";
 import VendorForm from "./Pages/VendorForm";
+import MaterialCreation from "./Pages/MaterialCreation";
 import Login from "./Pages/Login/Login";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path";
@@ -81,6 +82,7 @@ function App() {
 				<Routes>
 					<Route element={<Dashboard />}>
 						<Route exact path="/vendor-form" element={localStorage.getItem("token") ? <VendorForm /> : <Navigate replace to="/login" />}></Route>
+						<Route exact path="/material-creation-form" element={localStorage.getItem("token") ? <MaterialCreation /> : <Navigate replace to="/login" />}></Route>
 						<Route exact path="/form" element={localStorage.getItem("token") ? <Form /> : <Navigate replace to="/login" />}></Route>
 						<Route exact path="/approval" element={localStorage.getItem("token") ? <Approval /> : <Navigate replace to="/login" />}></Route>
 						<Route exact path="/view" element={localStorage.getItem("token") ? <View /> : <Navigate replace to="/login" />}></Route>
