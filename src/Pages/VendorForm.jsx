@@ -630,8 +630,8 @@ function Form() {
         >
           {payTerm?.map((item, i) => {
             return (
-              <SlMenuItem key={`pt${i}`} value={item.pay_term}>
-                {item.pay_term}
+              <SlMenuItem key={`pt${i}`} value={item.vendor_pay_term}>
+                {item.vendor_pay_term}
               </SlMenuItem>
             );
           })}
