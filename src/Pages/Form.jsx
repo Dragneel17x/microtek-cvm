@@ -108,6 +108,7 @@ function Form() {
 			});
 	}
 
+
 	function handleSubmit(event) {
 		event.preventDefault();
 		/* if(!(formData.DAPF && formData.GST_Image && formData.PAN_Image && formData.blank_cheque)){

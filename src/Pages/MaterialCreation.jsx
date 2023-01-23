@@ -34,6 +34,7 @@ function Form() {
   const [formData, setFormData] = useState({
     mat_logic_no: "",
     plant_name: "",
+    plant_code:"",
     storage_location: "",
     sales_org: "",
     dist_channel: "",
@@ -53,23 +54,23 @@ function Form() {
     approval: ""
   });
 
-  const [pincodeMapping, setPincodeMapping] = useState([]);
+  const [storageLocationMapping, setStorageLocationMapping] = useState([]);
 
 
-  function getPincodeDetails(pincode) {
+  function getStorageLocation(plant_name) {
     axios({
       method: "post",
-      url: `${baseurl.base_url}/cvm/get-pincode-data`,
+      url: `${baseurl.base_url}/cvm/get-storage-location-mapping`,
       headers: {
         "Content-type": "application/json",
       },
-      data: { pincode: pincode },
+      data: { plant_name: plant_name },
     })
       .then((res) => {
         console.log(res.data.data);
         setFormData({
           ...formData,
-          postal_code: pincode,
+          plant_name  : plant_name,
           city: res.data.data.city,
           district: res.data.data.district,
           state_code: res.data.data.state
@@ -80,11 +81,11 @@ function Form() {
         console.log(err);
         setFormData({
           ...formData,
-          postal_code: pincode,
+          plant_name: plant_name,
           city: "",
           district: "",
         });
-        console.log({ "invalid pincode": pincode });
+        console.log({ "invalid pincode": plant_name });
         setError({ ...error, ["postal_code"]: false });
       });
   }
@@ -183,7 +184,7 @@ function Form() {
     })
       .then((res) => {
         console.log(res);
-        setPincodeMapping(res.data.data);
+        setStorageLocationMapping(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -305,6 +306,24 @@ function Form() {
           })}
         </SlSelect>
 
+                {/*         Storage Location List  */}
+{/* 
+                <SlSelect
+          required
+          label="Storage Location"
+          onSlChange={(e) => {
+            setFormData({ ...formData, storage_location: e.target.value });
+          }}
+        >
+          {plantName?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.plant_name}>
+                {item.plant_name}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect> */}
+
         {/*         Material Short Description */}
 
         <SlInput
@@ -314,7 +333,7 @@ function Form() {
           onSlInput={(e) => {
             setFormData({ ...formData, district: e.target.value });
           }}
-          label="material short description"
+          label="Material Short Description"
         />
 
         {/*         GR Processing Time  */}
@@ -327,7 +346,7 @@ function Form() {
           helpText={error.gr_proc_time == true ? "" : "wrong entry"}
           name="gr_proc_time"
           onSlInput={(e) => {
-            setFormData({ ...formData, district: e.target.value });
+            setFormData({ ...formData, gr_proc_time: e.target.value });
           }}
           label="GR Processing Time"
         />
@@ -346,391 +365,6 @@ function Form() {
           }}
           label="HSN Code"
         />
-
-
-        <div className="input-field-main customer_name">
-
-          {/*District*/}
-
-          {formData.vendor_group == "ZIRM - Vendor Import - Raw Material" ?
-            ("") : formData.vendor_group == "ZIMN -  Vendor Import - Maintainence" ? ("") : (<SlInput
-              required
-              disabled={formData.country == "India" ? true : false}
-              value={formData.district}
-              onSlInput={(e) => {
-                setFormData({ ...formData, district: e.target.value });
-              }}
-              label="District"
-            />)}
-
-          {/*City*/}
-
-
-          <SlInput
-            className="helptext"
-            required
-            disabled={formData.country == "India" ? true : false}
-            name="city"
-            helpText={error.city == true ? "" : "wrong entry"}
-            value={formData.city}
-            onSlInput={(e) => {
-              validCheck(e.target.name, e.target.value);
-              setFormData({ ...formData, city: e.target.value });
-            }}
-            label="City"
-          />
-
-          {/*Postal Code*/}
-          <SlInput
-            className="helptext"
-            pattern="^[0-9]+$"
-            name="postal_code"
-            required
-            helpText={error.postal_code == true ? "" : "wrong entry"}
-            value={formData.postal_code}
-            onSlBlur={(e) => {
-              getPincodeDetails(e.target.value);
-            }}
-            onSlInput={(e) => {
-              validCheck(e.target.name, e.target.value);
-              setFormData({ ...formData, postal_code: e.target.value });
-              //getPincodeDetails(e.target.value)
-              /* let pinData = pincodeMapping.filter(item=>{return(item.pincode == e.target.value)}) */
-
-              /* if(pinData?.length){
-                setFormData({ ...formData, postal_code: e.target.value, city: pinData[0].city, district: pinData[0].district });
-                return
-              }
-              else{
-                setFormData({ ...formData, postal_code: e.target.value, city: "", district: "" });
-                console.log({"invalid pincode" : e.target.value});
-                setError({ ...error, [e.target.name]: false });
-              } */
-            }}
-            label="Postal Code"
-          />
-          {/*           Country */}
-
-          {formData.vendor_group == "ZIRM - Vendor Import - Raw Material" || formData.vendor_group == "ZIMN -  Vendor Import - Maintainence" ? (<SlSelect
-            required
-            disabled={false}
-            label="Select Country"
-            value={formData.country}
-            onSlInput={(e) => {
-              setSelectedCountry(e.target.value);
-              setFormData({ ...formData, country: e.target.value });
-            }}
-          >
-            {countryCodes?.map((item, i) => {
-              return (
-                <SlMenuItem key={`${i}c`} value={item.country}>
-                  {item.country}
-                </SlMenuItem>
-              );
-            })}
-          </SlSelect>) : (<SlSelect
-            required
-            disabled={true}
-            label="Select Country"
-            value={"India"}
-            onSlInput={(e) => {
-              setSelectedCountry(e.target.value);
-              setFormData({ ...formData, country: e.target.value });
-            }}
-          >
-            {countryCodes?.map((item, i) => {
-              return (
-                <SlMenuItem key={`${i}c`} value={item.country}>
-                  {item.country}
-                </SlMenuItem>
-              );
-            })}
-          </SlSelect>)}
-
-
-          {/*                       State/Region Code */}
-
-          {formData.vendor_group == "ZIRM - Vendor Import - Raw Material" ?
-            ("") : formData.vendor_group == "ZIMN -  Vendor Import - Maintainence" ? ("") : (<SlSelect
-              required
-              disabled={true}
-              label="Select Region/State Code"
-              value={formData.state_code}
-              onSlChange={(e) => {
-                setFormData({ ...formData, state_code: e.target.value });
-              }}
-            >
-              {stateList?.map((item, i) => {
-                return (
-                  <SlMenuItem key={`sl${i}`} value={item.state}>
-                    {item.state}
-                  </SlMenuItem>
-                );
-              })}
-            </SlSelect>)}
-
-          {/* {formData.cust_group !== "ZEXP - export customer" ? (
-            <SlSelect
-              required
-              label="Select Region/State Code"
-              onSlChange={(e) => {
-                setFormData({ ...formData, state_code: e.target.value });
-              }}
-            >
-              {stateList?.map((item, i) => {
-                return (
-                  <SlMenuItem key={`sl${i}`} value={item.state}>
-                    {item.state}
-                  </SlMenuItem>
-                );
-              })}
-            </SlSelect>
-          ) : (
-            ""
-          )} */}
-        </div>
-
-        {/*C/O Person*/}
-        <SlInput
-          className="helptext"
-          name="co_person"
-          required
-          pattern="^([A-Z]|[a-z]| )+$"
-          helpText={error.co_person == true ? "" : "wrong entry"}
-          value={formData.co_person}
-          onSlInput={(e) => {
-            validCheck(e.target.name, e.target.value);
-            setFormData({ ...formData, co_person: e.target.value });
-          }}
-          label="C/O Person"
-        />
-
-        {/*         Mobile Number  */}
-
-        <SlInput
-          required={true}
-          pattern="^[0-9]{10}$"
-          className="helptext"
-          name="mobile_no"
-          helpText={error.mobile_no ? "" : "wrong entry"}
-          maxlength={40}
-          value={formData.mobile_no}
-          label="Mobile Number"
-          onSlInput={(e) => {
-            validCheck(e.target.name, e.target.value);
-            setFormData({ ...formData, mobile_no: e.target.value });
-          }}
-        />
-
-        {/*            email ID */}
-
-        {formData.vendor_group == "ZEMP - Employee Vendor " ? (
-          <SlInput
-            required={false}
-            type="email"
-            label="E-Mail ID"
-            onSlInput={(e) => {
-              setFormData({ ...formData, email_id: e.target.value });
-            }}
-          />
-        ) : (
-          <SlInput
-            required={true}
-            type="email"
-            label="E-Mail ID"
-            onSlInput={(e) => {
-              setFormData({ ...formData, email_id: e.target.value });
-            }}
-          />
-        )}
-
-        {/*         Order Currency  */}
-
-        {formData.vendor_group == "ZEMP - Employee Vendor " ? ("") : (
-          <SlSelect
-            required
-            label="Order Currency"
-            onSlChange={(e) => {
-              setFormData({ ...formData, order_currency: e.target.value });
-            }}
-          >
-            {orderCurrency?.map((item, i) => {
-              return (
-                <SlMenuItem key={`sl${i}`} value={item.order_currency}>
-                  {item.order_currency}
-                </SlMenuItem>
-              )
-            })
-
-            }
-
-          </SlSelect>)}
-
-
-        {/*                 Company Code Mapping */}
-
-        <SlSelect
-          required
-          label="Company Code"
-          onSlChange={(e) => {
-            setFormData({ ...formData, company_code: e.target.value });
-          }}
-        >
-          {companyCode?.map((item, i) => {
-            return (
-              <SlMenuItem key={`cc${i}`} value={item.company_code}>
-                {item.company_code}
-              </SlMenuItem>
-            );
-          })}
-        </SlSelect>
-
-        {/*           Purchasing organisation mapping  */}
-
-        <SlSelect
-          required
-          label="Purchasing Organization"
-          onSlChange={(e) => {
-            setFormData({ ...formData, purchasing_org: e.target.value });
-          }}
-        >
-          <SlMenuItem value="1000 - MIPL">1000 - MIPL</SlMenuItem>
-          <SlMenuItem value="1001 - Ref-MIPL">1001 - Ref-MIPL</SlMenuItem>
-        </SlSelect>
-
-
-        {/*             Pay Term Mapping */}
-
-        <SlSelect
-          required
-          label="Pay Term"
-          onSlChange={(e) => {
-            setFormData({ ...formData, pay_term: e.target.value });
-          }}
-        >
-          {payTerm?.map((item, i) => {
-            return (
-              <SlMenuItem key={`pt${i}`} value={item.pay_term}>
-                {item.pay_term}
-              </SlMenuItem>
-            );
-          })}
-        </SlSelect>
-
-
-        {/*          Bank Account Number mapping */}
-
-        <SlInput
-          required={false}
-          pattern="^[0-9]$"
-          className="helptext"
-          name=""
-          value={formData.bank_acc_no}
-          maxlength={40}
-          label="Bank Account No"
-          helpText={error.bank_acc_no ? "" : "Wrong Entry"}
-          onSlInput={(e) => {
-            validCheck(e.target.name, e.target.value);
-            setFormData({ ...formData, bank_acc_no: e.target.value });
-          }}
-        />
-
-
-        {/*         IFSC Code Input */}
-
-        <SlInput
-          required={false}
-          pattern="^[A-Z]{4}0([A-Z]|[0-9]){6}$"
-          className="helptext"
-          name=""
-          value={formData.bank_acc_no}
-          maxlength={40}
-          label="IFSC Code"
-          helpText={error.ifsc_code ? "" : "Wrong Entry"}
-          onSlInput={(e) => {
-            validCheck(e.target.name, e.target.value);
-            setFormData({ ...formData, ifsc_code: e.target.value });
-          }}
-        />
-
-        {/*           Name on Account */}
-
-        <SlInput
-          required={false}
-          pattern="^([A-Z]|[a-z]| )+$"
-          className="helptext"
-          name=""
-          value={formData.name_on_acc}
-          maxlength={40}
-          label="name on account"
-          helpText={error.name_on_acc ? "" : "Wrong Entry"}
-          onSlInput={(e) => {
-            validCheck(e.target.name, e.target.value);
-            setFormData({ ...formData, name_on_acc: e.target.value });
-          }}
-        />
-
-
-
-        {/*           GSTIN input */}
-
-        {formData.vendor_group == "ZEMP - Employee Vendor " ? (
-          ""
-        ) : formData.vendor_group == "ZIMN -  Vendor Import - Maintainence" ? (
-          ""
-        ) : formData.vendor_group == "ZIRM - Vendor Import - Raw Material" ? ("") : (
-          <SlInput
-            label="GSTIN"
-            pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$"
-            required
-            className="helptext"
-            name="gstin"
-            helpText={error.gstin ? "" : "wrong Entry"}
-            value={formData.gstin}
-            onSlInput={(e) => {
-              validCheck(e.target.name, e.target.value);
-              setFormData({ ...formData, gstin: e.target.value });
-            }}
-          />
-        )}
-
-        {/*           PAN Number */}
-
-        {formData.vendor_group == "ZIMN -  Vendor Import - Maintainence" ? (
-          ""
-        ) : formData.vendor_group == "ZIRM - Vendor Import - Raw Material" ? ("") : (
-          <SlInput
-            label="PAN Number"
-            required={true}
-            className="helptext"
-            name="pan"
-            value={formData.pan}
-            helpText={error.pan ? "" : "Wrong Entry"}
-            pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
-            onSlInput={(e) => {
-              validCheck(e.target.name, e.target.value);
-              setFormData({ ...formData, pan: e.target.value });
-            }}
-          />
-
-        )}
-
-
-        {/*         Withholding Tax Input */}
-
-        {formData.vendor_group == "ZDSR - Vendor Domestic - Service " ? (<SlInput
-          label="Withholding Tax"
-          required={false}
-          className="helptext"
-          name="witholding tax"
-          value={formData.witholding_tax}
-          onSlInput={(e) => {
-            validCheck(e.target.name, e.target.value);
-            setFormData({ ...formData, witholding_tax: e.target.value });
-          }}
-        />) : ("")}
-
-
 
 
 
