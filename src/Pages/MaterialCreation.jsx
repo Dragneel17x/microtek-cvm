@@ -33,13 +33,15 @@ function Form() {
   const [declarationCheck, setDeclarationCheck] = useState(false);
   const [storageLocation, setStorageLocation] = useState();
   const [matSalesOrg, setMatSalesOrg] = useState();
+  const [matDistChannel, setMatDistChannel] = useState();
+  const [baseUnitMeasure, setBaseUnitMeasure] = useState()
   const [formData, setFormData] = useState({
     mat_logic_no: "",
     plant_name: "",
-    plant_code:"",
+    plant_code: "",
     storage_location: "",
     mat_sales_org: "",
-    dist_channel: "",
+    mat_dist_channel: "",
     mat_short_desc: "",
     base_unit_measure: "",
     mat_long_desc: "",
@@ -56,26 +58,26 @@ function Form() {
     approval: ""
   });
 
-function getStorageLocation(plant_name){
-  const data = {
-    plant_name: plant_name
-  };
-  axios({
-    method: "post",
-    url: `${baseurl.base_url}/cvm/get-storage-location`,
-    header: {
-      "Content-type": "application/JSON",
-    },
-    data,
-  })
-    .then((res) => {
-      console.log(res);
-      setStorageLocation(res?.data?.data)
+  function getStorageLocation(plant_name) {
+    const data = {
+      plant_name: plant_name
+    };
+    axios({
+      method: "post",
+      url: `${baseurl.base_url}/cvm/get-storage-location`,
+      header: {
+        "Content-type": "application/JSON",
+      },
+      data,
     })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+      .then((res) => {
+        console.log(res);
+        setStorageLocation(res?.data?.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -176,6 +178,36 @@ function getStorageLocation(plant_name){
         console.log(err);
       });
   });
+  useQuery("get-mat-dist-channel", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-mat-dist-channel`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setMatDistChannel(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+  useQuery("get-base-unit-measure", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-base-unit-measure`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setBaseUnitMeasure(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
 
   useEffect(() => {
     if (selectedCountry) {
@@ -229,7 +261,7 @@ function getStorageLocation(plant_name){
     vendor_name: /^([A-Z]|[a-z]| )+$/,
     name_on_acc: /^([A-Z]|[a-z]| )+$/,
     vendor_name_op1: /^([A-Z]|[a-z]| )+$/,
-    mat_logic_no:/^[0-9]+$/,
+    mat_logic_no: /^[0-9]+$/,
     postal_code: /^[0-9]+$/,
     city: /^([A-Z]|[a-z]| )+$/,
     mobile_no: /^[0-9]{10}$/,
@@ -238,7 +270,7 @@ function getStorageLocation(plant_name){
     bank_acc_no: /^[0-9]+$/,
     ifsc_code: /^[A-Z]{4}0([A-Z]|[0-9]){6}$/,
     gr_proc_time: /^[0-9]{3}$/,
-    hsn_code : /^[0-9]{6}$/,
+    hsn_code: /^[0-9]{6}$/,
   };
 
   function validCheck(name, value) {
@@ -252,28 +284,28 @@ function getStorageLocation(plant_name){
   return (
     <div className="content_main">
       <form onSubmit={handleSubmit} className="form-main">
-        
+
 
         {/*         Material Logic Number */}
 
-{/*         <div className="input-field-main customer_name">
+        {/*         <div className="input-field-main customer_name">
 
         </div> */}
 
         <SlInput
-            className="helptext"
-            required
-            pattern="^[0-9]+$"
-            name="mat_logic_no"
-            helpText={error.mat_logic_no == true ? "" : "wrong entry"}
-            value={formData.mat_logic_no}
-            maxlength={18}
-            onSlInput={(e) => {
-              validCheck(e.target.name, e.target.value);
-              setFormData({ ...formData, mat_logic_no: e.target.value });
-            }}
-            label="Material Logic Number"
-          />
+          className="helptext"
+          required
+          pattern="^[0-9]+$"
+          name="mat_logic_no"
+          helpText={error.mat_logic_no == true ? "" : "wrong entry"}
+          value={formData.mat_logic_no}
+          maxlength={18}
+          onSlInput={(e) => {
+            validCheck(e.target.name, e.target.value);
+            setFormData({ ...formData, mat_logic_no: e.target.value });
+          }}
+          label="Material Logic Number"
+        />
         {/*         Plant DropDown List  */}
 
         <SlSelect
@@ -293,9 +325,9 @@ function getStorageLocation(plant_name){
           })}
         </SlSelect>
 
-                {/*         Storage Location List  */}
+        {/*         Storage Location List  */}
 
-                <SlSelect
+        <SlSelect
           required
           label="Storage Location"
           onSlChange={(e) => {
@@ -309,11 +341,11 @@ function getStorageLocation(plant_name){
               </SlMenuItem>
             );
           })}
-        </SlSelect> 
+        </SlSelect>
 
-                {/*         Sales Organization Mapping */}
+        {/*         Sales Organization Mapping */}
 
-                <SlSelect
+        <SlSelect
           required
           label="Sales Organization"
           onSlChange={(e) => {
@@ -327,8 +359,43 @@ function getStorageLocation(plant_name){
               </SlMenuItem>
             );
           })}
-        </SlSelect> 
+        </SlSelect>
 
+        {/*           Material Distribution Channel */}
+
+        <SlSelect
+          required
+          label="Distribution Channel"
+          onSlChange={(e) => {
+            setFormData({ ...formData, mat_dist_channel: e.target.value });
+          }}
+        >
+          {matDistChannel?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.mat_dist_channel}>
+                {item.mat_dist_channel}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
+{/*         Base Unit of Measure */}
+
+        <SlSelect
+          required
+          label="Base Unit of Measure"
+          onSlChange={(e) => {
+            setFormData({ ...formData, base_unit_measure: e.target.value });
+          }}
+        >
+          {baseUnitMeasure?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.base_unit_measure}>
+                {item.base_unit_measure}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
 
 
         {/*         Material Short Description */}
@@ -364,9 +431,9 @@ function getStorageLocation(plant_name){
           required
           value={formData.hsn_code}
           maxlength={6}
-          pattern = "^[0-9]{6}$"
+          pattern="^[0-9]{6}$"
           helpText={error.hsn_code == true ? "" : "wrong entry"}
-          name = "hsn_code"
+          name="hsn_code"
           onSlInput={(e) => {
             setFormData({ ...formData, district: e.target.value });
           }}

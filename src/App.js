@@ -82,12 +82,12 @@ function App() {
 			<div className="App">
 				<Routes>
 					<Route element={<Dashboard />}>
-						<Route exact path="/vendor-form" element={localStorage.getItem("token") ? <VendorForm /> : <Navigate replace to="/login" />}></Route>
-						<Route exact path="/material-creation-form" element={localStorage.getItem("token") ? <MaterialCreation /> : <Navigate replace to="/login" />}></Route>
-						<Route exact path="/form" element={localStorage.getItem("token") ? <Form /> : <Navigate replace to="/login" />}></Route>
+						<Route exact path="/vendor-form" element={localStorage.getItem("token") ? (JSON.parse(localStorage.getItem('module_access')).cvm_vendor_form ? <VendorForm /> :  <Navigate replace to="/view" /> )  : <Navigate replace to="/login" />}></Route>
+						<Route exact path="/material-creation-form" element={localStorage.getItem("token") ? JSON.parse(localStorage.getItem('module_access')).cvm_material_creation_form ? <MaterialCreation /> :  <Navigate replace to="/view" />  : <Navigate replace to="/login" />}></Route>
+						<Route exact path="/form" element={localStorage.getItem("token") ? JSON.parse(localStorage.getItem('module_access')).cvm_customer_form ? <Form /> :  <Navigate replace to="/view" /> : <Navigate replace to="/login" />}></Route>
 						<Route exact path="/approval" element={localStorage.getItem("token") ? <Approval /> : <Navigate replace to="/login" />}></Route>
 						<Route exact path="/view" element={localStorage.getItem("token") ? <View /> : <Navigate replace to="/login" />}></Route>
-						<Route exact path="/mdm-view" element={localStorage.getItem("token") ? <Mdmview /> : <Navigate replace to="/login" />}></Route>
+						<Route exact path="/mdm-view" element={localStorage.getItem("token") ? JSON.parse(localStorage.getItem('module_access')).cvm_mdm_view ? <Mdmview /> :  <Navigate replace to="/view" /> : <Navigate replace to="/login" />}></Route>
 					</Route>
 					<Route element={<Auth />}>
 						<Route exact path="/login" element={<Login />} />

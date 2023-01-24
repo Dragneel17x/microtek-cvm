@@ -86,16 +86,18 @@ function Navbar() {
 					<div className="nav-items-main">
 						<SlDropdown distance={5} className="nav-item">
 							<SlButton className="nav-item-button" slot="trigger" caret>
-								FORM
+								Services
 							</SlButton>
 							<SlMenu>
+								{JSON.parse(localStorage.getItem('module_access')).cvm_customer_form ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/form");
 									}}
 								>
 									Customer On-Boarding
-								</SlMenuItem>
+								</SlMenuItem> : ""}
+
 								<SlMenuItem
 									onClick={() => {
 										navigate("/approval");
@@ -110,20 +112,31 @@ function Navbar() {
 								>
 									View Submittions
 								</SlMenuItem>
+								{JSON.parse(localStorage.getItem('module_access')).cvm_vendor_form ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/vendor-form");
 									}}
 								>
 									Vendor Form
-								</SlMenuItem>
+								</SlMenuItem>:""}
+								{JSON.parse(localStorage.getItem('module_access')).cvm_material_creation_form ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/material-creation-form");
 									}}
 								>
 									Material Creation Form
-								</SlMenuItem>
+								</SlMenuItem> :""}
+								{JSON.parse(localStorage.getItem('module_access')).cvm_mdm_view ? 
+								<SlMenuItem
+									onClick={() => {
+										navigate("/mdm-view");
+									}}
+								>
+									MDM View
+								</SlMenuItem> :""}
+								
 							</SlMenu>
 						</SlDropdown>
 						<SlDropdown distance={5} className="nav-item">
@@ -131,7 +144,7 @@ function Navbar() {
 								Account
 							</SlButton>
 							<SlMenu>
-								<SlMenuItem onclick={() => {}}>{localStorage.getItem("fullname")}</SlMenuItem>
+								<SlMenuItem onclick={() => { }}>{localStorage.getItem("fullname")}</SlMenuItem>
 								<SlMenuItem
 									onclick={() => {
 										localStorage.clear();

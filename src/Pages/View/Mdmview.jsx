@@ -1,22 +1,23 @@
-import { SlButton, SlDialog, SlTag } from "@shoelace-style/shoelace/dist/react";
+import { SlButton, SlDialog, SlInput, SlTag } from "@shoelace-style/shoelace/dist/react";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import React, { useEffect, useState } from "react";
 import { baseurl } from "../../config/apiConfig";
 
 function Mdmview() {
-    useEffect(() => {
+	useEffect(() => {
 		getForms();
 	}, []);
 
 	const [approvals, setApprovals] = useState();
 	const [singleApproval, setSingleApproval] = useState();
 	const [approvalDialog, setApprovalDialog] = useState(false);
+	const [sap_code, setSap_code] = useState("");
 
 	function getForms() {
 		axios({
 			method: "post",
-			url: `${baseurl.base_url}/cvm/get-submission-view`,
+			url: `${baseurl.base_url}/cvm/get-mdm-view`,
 			//url: `${baseurl.base_url}/cvm/get-approval-forms`,
 			header: {
 				"Content-type": "application/JSON",
@@ -30,29 +31,55 @@ function Mdmview() {
 				console.log(err);
 			});
 	}
-	
+
+	function updateForm() {
+		const data = {
+			employee_id: localStorage.getItem('employee_id'),
+			sap_code: sap_code,
+			form_id: singleApproval.id
+		}
+		console.log(data);
+		axios({
+			method: "post",
+			url: `${baseurl.base_url}/cvm/add-sap-code`,
+			//url: `${baseurl.base_url}/cvm/get-approval-forms`,
+			header: {
+				"Content-type": "application/JSON",
+			},
+			data
+		})
+			.then((res) => {
+				console.log(res.data);
+				setApprovalDialog(false)
+				getForms();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+
 	const options = {
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleApproval(approvals[rowMeta.dataIndex]);
 			setApprovalDialog(true);
 		},
-        selectableRowsHideCheckboxes: true
+		selectableRowsHideCheckboxes: true
 	};
 	const columns = [
 		{ name: "created_by", label: "Applied By" },
 		{ name: "customer_name", label: "Customer Name" },
 		{ name: "company_code", label: "Company Code" },
 		{ name: "mobile_no", label: "Mobile Number" },
-		{ name: "approver_employee_id", label: "Approver ID" },
-        { name: "ai_status", label: "Approval Status" },
-        { name: "status", label: "Overall Status" },
+		{ name: "distribution_channel", label: "Distribution Channel" },
+		{ name: "email_id", label: "Email ID" },
+		{ name: "status", label: "Overall Status" },
 	];
 	return (
 		<div>
 			<MUIDataTable options={options} title="Submitted Forms View For MDM" data={approvals} columns={columns} />
 			<SlDialog label="Form Data" open={approvalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setApprovalDialog(false)}>
-			<div>
+				<div>
 					<h4>
 						Customer Group: <span>{singleApproval?.customer_group}</span>
 					</h4>
@@ -131,12 +158,23 @@ function Mdmview() {
 					<h4>
 						PAN: <span>{singleApproval?.pan_number}</span>
 					</h4>
-					<h4>
-						Remarks: <span>{singleApproval?.approver_remarks}</span>
-					</h4>
+					<SlInput
+						maxlength={40}
+						className="helptext"
+						pattern="^([A-Z]|[a-z]| )+$"
+						name="cust_name_op1"
+						style={{ marginTop: "20px" }}
+						value={sap_code}
+						onSlInput={(e) => {
+							setSap_code(e.target.value);
+						}}
+						label="SAP Customer Part Code"
+					/>
 				</div>
-                <SlTag slot="footer" size="large" pill style={{"marginRight":"20px"}} variant={singleApproval?.status == 'pending'? 'primary': (singleApproval?.status == 'rejected'? 'danger': 'success')}>{singleApproval?.status}</SlTag>
-                <SlTag slot="footer" size="large" pill style={{"marginRight":"20px"}} variant={singleApproval?.ai_status == 'pending'? 'primary': (singleApproval?.ai_status == 'rejected'? 'danger': singleApproval?.ai_status == 'future_approval'? 'neutral':'success')}>{singleApproval?.ai_status}</SlTag>
+
+				<SlButton slot="footer" variant="success" style={{ marginRight: "20px" }} onClick={() => updateForm()}>
+					Update
+				</SlButton>
 				<SlButton slot="footer" variant="primary" onClick={() => setApprovalDialog(false)}>
 					Close
 				</SlButton>

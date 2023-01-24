@@ -82,7 +82,7 @@ function Login() {
 								},
 								data,
 							});
-							navigate("/form");
+							navigate("/view");
 							window.location.reload();
 						} else {
 							alert("module access not allowed");
