@@ -31,12 +31,14 @@ function Form() {
   const [open, setOpen] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState(false);
   const [declarationCheck, setDeclarationCheck] = useState(false);
+  const [storageLocation, setStorageLocation] = useState();
+  const [matSalesOrg, setMatSalesOrg] = useState();
   const [formData, setFormData] = useState({
     mat_logic_no: "",
     plant_name: "",
     plant_code:"",
     storage_location: "",
-    sales_org: "",
+    mat_sales_org: "",
     dist_channel: "",
     mat_short_desc: "",
     base_unit_measure: "",
@@ -54,41 +56,26 @@ function Form() {
     approval: ""
   });
 
-  const [storageLocationMapping, setStorageLocationMapping] = useState([]);
-
-
-  function getStorageLocation(plant_name) {
-    axios({
-      method: "post",
-      url: `${baseurl.base_url}/cvm/get-storage-location-mapping`,
-      headers: {
-        "Content-type": "application/json",
-      },
-      data: { plant_name: plant_name },
+function getStorageLocation(plant_name){
+  const data = {
+    plant_name: plant_name
+  };
+  axios({
+    method: "post",
+    url: `${baseurl.base_url}/cvm/get-storage-location`,
+    header: {
+      "Content-type": "application/JSON",
+    },
+    data,
+  })
+    .then((res) => {
+      console.log(res);
+      setStorageLocation(res?.data?.data)
     })
-      .then((res) => {
-        console.log(res.data.data);
-        setFormData({
-          ...formData,
-          plant_name  : plant_name,
-          city: res.data.data.city,
-          district: res.data.data.district,
-          state_code: res.data.data.state
-        });
-        setError({ ...error, ["postal_code"]: true });
-      })
-      .catch((err) => {
-        console.log(err);
-        setFormData({
-          ...formData,
-          plant_name: plant_name,
-          city: "",
-          district: "",
-        });
-        console.log({ "invalid pincode": plant_name });
-        setError({ ...error, ["postal_code"]: false });
-      });
-  }
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -174,17 +161,16 @@ function Form() {
         console.log(err);
       });
   });
-  useQuery("get-pincode-mapping", () => {
+  useQuery("get-mat-sales-org", () => {
     axios({
       method: "get",
-      url: `${baseurl.base_url}/cvm/get-pincode-mapping`,
-      header: {
-        "Content-type": "application/JSON",
+      url: `${baseurl.base_url}/cvm/get-mat-sales-org`,
+      headers: {
+        "Content-type": "application/json",
       },
     })
       .then((res) => {
-        console.log(res);
-        setStorageLocationMapping(res.data.data);
+        setMatSalesOrg(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -295,8 +281,6 @@ function Form() {
           label="Plant Name"
           onSlChange={(e) => {
             setFormData({ ...formData, plant_name: e.target.value });
-          }}
-          onSlBlur={(e)=>{
             getStorageLocation(e.target.value);
           }}
         >
@@ -318,14 +302,34 @@ function Form() {
             setFormData({ ...formData, storage_location: e.target.value });
           }}
         >
-          {plantName?.map((item, i) => {
+          {storageLocation?.map((item, i) => {
             return (
               <SlMenuItem key={`cg${i}`} value={item.storage_location_desc}>
                 {item.storage_location_desc}
               </SlMenuItem>
             );
           })}
-        </SlSelect>
+        </SlSelect> 
+
+                {/*         Sales Organization Mapping */}
+
+                <SlSelect
+          required
+          label="Sales Organization"
+          onSlChange={(e) => {
+            setFormData({ ...formData, mat_sales_org: e.target.value });
+          }}
+        >
+          {matSalesOrg?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.mat_sales_org}>
+                {item.mat_sales_org}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect> 
+
+
 
         {/*         Material Short Description */}
 

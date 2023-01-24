@@ -15,6 +15,7 @@ import Approval from "./Pages/Approval/Approval";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import View from "./Pages/View/View";
+import Mdmview from "./Pages/View/Mdmview";
 setBasePath("https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.87/dist/");
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
 						<Route exact path="/form" element={localStorage.getItem("token") ? <Form /> : <Navigate replace to="/login" />}></Route>
 						<Route exact path="/approval" element={localStorage.getItem("token") ? <Approval /> : <Navigate replace to="/login" />}></Route>
 						<Route exact path="/view" element={localStorage.getItem("token") ? <View /> : <Navigate replace to="/login" />}></Route>
+						<Route exact path="/mdm-view" element={localStorage.getItem("token") ? <Mdmview /> : <Navigate replace to="/login" />}></Route>
 					</Route>
 					<Route element={<Auth />}>
 						<Route exact path="/login" element={<Login />} />

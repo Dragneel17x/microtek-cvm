@@ -4,29 +4,23 @@ import MUIDataTable from "mui-datatables";
 import React, { useEffect, useState } from "react";
 import { baseurl } from "../../config/apiConfig";
 
-
-function View() {
+function Mdmview() {
     useEffect(() => {
-		getApprovals();
+		getForms();
 	}, []);
 
 	const [approvals, setApprovals] = useState();
 	const [singleApproval, setSingleApproval] = useState();
 	const [approvalDialog, setApprovalDialog] = useState(false);
 
-	function getApprovals() {
-		const data = {
-			employee_id: localStorage.getItem("employee_id"),
-		};
-		console.log(data);
+	function getForms() {
 		axios({
 			method: "post",
 			url: `${baseurl.base_url}/cvm/get-submission-view`,
 			//url: `${baseurl.base_url}/cvm/get-approval-forms`,
 			header: {
 				"Content-type": "application/JSON",
-			},
-			data,
+			}
 		})
 			.then((res) => {
 				console.log(res.data.data);
@@ -56,7 +50,7 @@ function View() {
 	];
 	return (
 		<div>
-			<MUIDataTable options={options} title="Submitted Forms View" data={approvals} columns={columns} />
+			<MUIDataTable options={options} title="Submitted Forms View For MDM" data={approvals} columns={columns} />
 			<SlDialog label="Form Data" open={approvalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setApprovalDialog(false)}>
 			<div>
 					<h4>
@@ -151,4 +145,4 @@ function View() {
 	);
 }
 
-export default View
+export default Mdmview
