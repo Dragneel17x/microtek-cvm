@@ -296,6 +296,9 @@ function Form() {
           onSlChange={(e) => {
             setFormData({ ...formData, plant_name: e.target.value });
           }}
+          onSlBlur={(e)=>{
+            getStorageLocation(e.target.value);
+          }}
         >
           {plantName?.map((item, i) => {
             return (
@@ -307,7 +310,7 @@ function Form() {
         </SlSelect>
 
                 {/*         Storage Location List  */}
-{/* 
+
                 <SlSelect
           required
           label="Storage Location"
@@ -317,12 +320,12 @@ function Form() {
         >
           {plantName?.map((item, i) => {
             return (
-              <SlMenuItem key={`cg${i}`} value={item.plant_name}>
-                {item.plant_name}
+              <SlMenuItem key={`cg${i}`} value={item.storage_location_desc}>
+                {item.storage_location_desc}
               </SlMenuItem>
             );
           })}
-        </SlSelect> */}
+        </SlSelect>
 
         {/*         Material Short Description */}
 
