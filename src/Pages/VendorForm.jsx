@@ -902,7 +902,7 @@ function Form() {
             );
             axios({
               method: "post",
-              url: "${baseurl.base_url}/cvm/post-vendor-form-data",
+              url: `${baseurl.base_url}/cvm/post-vendor-form-data`,
               header: {
                 "Content-type": "multipart/form-data",
               },
