@@ -53,7 +53,7 @@ function Form() {
     mat_short_desc: "",
     base_unit_measure: "",
     mat_long_desc: "",
-    mat_group: "",
+    mat_grp: "",
     mat_div: "",
     mat_price_grp: "",
     mat_purchase_grp: "",
@@ -455,13 +455,13 @@ function Form() {
           required
           label="Material Group"
           onSlChange={(e) => {
-            setFormData({ ...formData, mat_group: e.target.value });
+            setFormData({ ...formData, mat_grp: e.target.value });
           }}
         >
           {matGrp?.map((item, i) => {
             return (
-              <SlMenuItem key={`cg${i}`} value={item.mat_group}>
-                {item.mat_group}
+              <SlMenuItem key={`cg${i}`} value={item.mat_grp}>
+                {item.mat_grp}
               </SlMenuItem>
             );
           })}
