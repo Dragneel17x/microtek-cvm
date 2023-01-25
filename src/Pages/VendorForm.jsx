@@ -58,7 +58,7 @@ function Form() {
     witholding_tax: "",
     order_currency: "",
     purchasing_org: "",
-    //employee_id: "57055",
+    employee_id: localStorage.getItem('employee_id'),
     blank_cheque: "",
     GST_Image: "",
     PAN_Image: "",
@@ -642,9 +642,9 @@ function Form() {
 
         <SlInput
           required={false}
-          pattern="^[0-9]$"
+          pattern="^[0-9]+$"
           className="helptext"
-          name=""
+          name="bank_acc_no"
           value={formData.bank_acc_no}
           maxlength={40}
           label="Bank Account No"
@@ -662,8 +662,8 @@ function Form() {
           required={false}
           pattern="^[A-Z]{4}0([A-Z]|[0-9]){6}$"
           className="helptext"
-          name=""
-          value={formData.bank_acc_no}
+          name="ifsc_code"
+          value={formData.ifsc_code}
           maxlength={40}
           label="IFSC Code"
           helpText={error.ifsc_code ? "" : "Wrong Entry"}
@@ -679,7 +679,7 @@ function Form() {
           required={false}
           pattern="^([A-Z]|[a-z]| )+$"
           className="helptext"
-          name=""
+          name="name_on_acc"
           value={formData.name_on_acc}
           maxlength={40}
           label="name on account"
