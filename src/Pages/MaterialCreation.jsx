@@ -331,8 +331,8 @@ function Form() {
         >
           {matType?.map((item, i) => {
             return (
-              <SlMenuItem key={`cg${i}`} value={item.mat_type}>
-                {item.mat_type}
+              <SlMenuItem key={`cg${i}`} value={item.material_type}>
+                {item.material_type}
               </SlMenuItem>
             );
           })}
