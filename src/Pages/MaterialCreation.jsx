@@ -95,7 +95,7 @@ function Form() {
 
     axios({
       method: "post",
-      url: `${baseurl.base_url}/cvm/get-storage-location`,
+      url: `${baseurl.base_url}/cvm/get-valuation-type`,
       header: {
         "Content-type": "application/JSON",
       },
@@ -126,13 +126,13 @@ function Form() {
       },
     })
       .then((res) => {
+        console.log(res.data);
         setMatType(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   })
-
   useQuery("get-plant-name", () => {
     axios({
       method: "get",
@@ -149,7 +149,6 @@ function Form() {
         console.log(err);
       });
   });
-
   useQuery("get-mat-sales-org", () => {
     axios({
       method: "get",
@@ -195,7 +194,6 @@ function Form() {
         console.log(err);
       });
   })
-
   useQuery("get-mat-grp", () => {
     axios({
       method: "get",
@@ -211,7 +209,6 @@ function Form() {
         console.log(err);
       });
   })
-
   useQuery("get-mat-div", () => {
     axios({
       method: "get",
@@ -242,7 +239,6 @@ function Form() {
         console.log(err);
       });
   })
-
   useQuery("get-mat-purchase-grp", () => {
     axios({
       method: "get",
@@ -258,7 +254,6 @@ function Form() {
         console.log(err);
       });
   })
-
   useQuery("get-serial-no-profile", () => {
     axios({
       method: "get",
@@ -274,7 +269,6 @@ function Form() {
         console.log(err);
       });
   })
-
   useQuery("get-quality-insp-type", () => {
     axios({
       method: "get",
@@ -327,6 +321,7 @@ function Form() {
           onSlChange={(e) => {
             setFormData({ ...formData, mat_type: e.target.value });
             getValuationType(e.target.value);
+            console.log("change");
           }}
         >
           {matType?.map((item, i) => {
