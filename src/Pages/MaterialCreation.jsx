@@ -35,6 +35,14 @@ function Form() {
   const [matSalesOrg, setMatSalesOrg] = useState();
   const [matDistChannel, setMatDistChannel] = useState();
   const [baseUnitMeasure, setBaseUnitMeasure] = useState()
+  const [matGrp, setMatGrp] = useState()
+  const [matDiv, setMatDiv] = useState()
+  const [matPriceGrp, setMatPriceGrp] = useState()
+  const [matPurchaseGrp, setMatPurchaseGrp] = useState()
+  const [serialNoProfile, setSerialNoProfile] = useState()
+  const [qualityInspType, setQualityInspType] = useState()
+  const [matType, setMatType] = useState()
+  const [valuationType, setValuationType] = useState()
   const [formData, setFormData] = useState({
     mat_logic_no: "",
     plant_name: "",
@@ -46,15 +54,16 @@ function Form() {
     base_unit_measure: "",
     mat_long_desc: "",
     mat_group: "",
-    division: "",
+    mat_div: "",
     mat_price_grp: "",
-    purchase_grp: "",
+    mat_purchase_grp: "",
     gr_proc_time: "",
     hsn_code: "",
     serial_no_profile: "",
     quality_insp_type: "",
     manufactured: "",
-    mrp_type: "",
+    mat_type: "",
+    valuation_type: "",
     approval: ""
   });
 
@@ -79,12 +88,50 @@ function Form() {
       });
   }
 
+  function getValuationType(mat_type) {
+    const data = {
+      mat_type: mat_type
+    }
+
+    axios({
+      method: "post",
+      url: `${baseurl.base_url}/cvm/get-storage-location`,
+      header: {
+        "Content-type": "application/JSON",
+      },
+      data,
+    })
+      .then((res) => {
+        console.log(res);
+        setValuationType(res?.data?.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     //alert("All fields are valid!");
     setConfirmDialog(true);
 
   }
+
+  useQuery("get-mat-type", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-mat-type`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setMatType(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
 
   useQuery("get-plant-name", () => {
     axios({
@@ -102,67 +149,7 @@ function Form() {
         console.log(err);
       });
   });
-  useQuery("get-country-codes", () => {
-    axios({
-      method: "get",
-      url: `${baseurl.base_url}/cvm/get-country-codes`,
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setCountryCodes(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-  useQuery("get-company-code", () => {
-    axios({
-      method: "get",
-      url: `${baseurl.base_url}/cvm/get-company-code`,
-      header: {
-        "Content-type": "application/JSON",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setCompanyCode(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-  useQuery("get-pay-term", () => {
-    axios({
-      method: "get",
-      url: `${baseurl.base_url}/cvm/get-pay-term`,
-      header: { Content: "application/JSON" },
-    })
-      .then((res) => {
-        console.log(res);
-        setPayTerm(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-  useQuery("get-order-currency", () => {
-    axios({
-      method: "get",
-      url: `${baseurl.base_url}/cvm/get-order-currency`,
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((res) => {
-        setOrderCurrency(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+
   useQuery("get-mat-sales-org", () => {
     axios({
       method: "get",
@@ -209,66 +196,112 @@ function Form() {
       });
   })
 
-  useEffect(() => {
-    if (selectedCountry) {
-      getState();
-    }
-  }, [selectedCountry]);
-
-  function getState() {
-    const data = {
-      country: selectedCountry,
-    };
+  useQuery("get-mat-grp", () => {
     axios({
-      method: "post",
-      url: `${baseurl.base_url}/cvm/get-state-list`,
-      header: {
-        "Content-type": "application/JSON",
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-mat-grp`,
+      headers: {
+        "Content-type": "application/json",
       },
-      data,
     })
       .then((res) => {
-        console.log(res);
-        setStateList(res.data.data);
+        setMatGrp(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  })
+
+  useQuery("get-mat-div", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-mat-div`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setMatDiv(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+  useQuery("get-mat-price-grp", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-mat-price-grp`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setMatPriceGrp(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+
+  useQuery("get-mat-purchase-grp", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-mat-purchase-grp`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setMatPurchaseGrp(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+
+  useQuery("get-serial-no-profile", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-serial-no-profile`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setSerialNoProfile(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+
+  useQuery("get-quality-insp-type", () => {
+    axios({
+      method: "get",
+      url: `${baseurl.base_url}/cvm/get-quality-insp-type`,
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        setQualityInspType(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+
+
 
   const [error, setError] = useState({
-    co_person: true,
-    vendor_name: true,
-    vendor_name_op1: true,
-    postal_code: true,
-    city: true,
+
     mat_logic_no: true,
-    /* ind_cust_num: true,
-    local_cust_num: true,
-    intl_cust_num: true, */
-    gstin: true,
-    pan: true,
-    bank_acc_no: true,
-    ifsc_code: true,
-    name_on_acc: true,
-    mobile_no: true,
     gr_proc_time: true,
     hsn_code: true,
   });
 
   const regexp = {
-    co_person: /^([A-Z]|[a-z]| )+$/,
-    vendor_name: /^([A-Z]|[a-z]| )+$/,
-    name_on_acc: /^([A-Z]|[a-z]| )+$/,
-    vendor_name_op1: /^([A-Z]|[a-z]| )+$/,
     mat_logic_no: /^[0-9]+$/,
-    postal_code: /^[0-9]+$/,
-    city: /^([A-Z]|[a-z]| )+$/,
-    mobile_no: /^[0-9]{10}$/,
-    gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$/,
-    pan: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
-    bank_acc_no: /^[0-9]+$/,
-    ifsc_code: /^[A-Z]{4}0([A-Z]|[0-9]){6}$/,
     gr_proc_time: /^[0-9]{3}$/,
     hsn_code: /^[0-9]{6}$/,
   };
@@ -285,6 +318,25 @@ function Form() {
     <div className="content_main">
       <form onSubmit={handleSubmit} className="form-main">
 
+
+        {/*         Material Type Mapping */}
+
+        <SlSelect
+          required
+          label="Material Type"
+          onSlChange={(e) => {
+            setFormData({ ...formData, mat_type: e.target.value });
+            getValuationType(e.target.value);
+          }}
+        >
+          {matType?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.mat_type}>
+                {item.mat_type}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
 
         {/*         Material Logic Number */}
 
@@ -379,7 +431,7 @@ function Form() {
           })}
         </SlSelect>
 
-{/*         Base Unit of Measure */}
+        {/*         Base Unit of Measure */}
 
         <SlSelect
           required
@@ -397,6 +449,78 @@ function Form() {
           })}
         </SlSelect>
 
+        {/*         Material Group Mapping */}
+
+        <SlSelect
+          required
+          label="Material Group"
+          onSlChange={(e) => {
+            setFormData({ ...formData, mat_group: e.target.value });
+          }}
+        >
+          {matGrp?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.mat_group}>
+                {item.mat_group}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
+        {/*         Material Division Group */}
+
+        <SlSelect
+          required
+          label="Division"
+          onSlChange={(e) => {
+            setFormData({ ...formData, mat_div: e.target.value });
+          }}
+        >
+          {matDiv?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.mat_div}>
+                {item.mat_div}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
+        {/*         Material Price Group Mapping */}
+
+        <SlSelect
+          required
+          label="Material Price Group"
+          onSlChange={(e) => {
+            setFormData({ ...formData, mat_price_grp: e.target.value });
+          }}
+        >
+          {matPriceGrp?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.mat_price_grp}>
+                {item.mat_price_grp}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
+        {/*         Purchase Group */}
+
+        <SlSelect
+          required
+          label="Material Purchase Group"
+          onSlChange={(e) => {
+            setFormData({ ...formData, mat_purchase_grp: e.target.value });
+          }}
+        >
+          {matPurchaseGrp?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.mat_purchase_grp}>
+                {item.mat_purchase_grp}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
 
         {/*         Material Short Description */}
 
@@ -405,9 +529,21 @@ function Form() {
           value={formData.mat_short_desc}
           maxlength={40}
           onSlInput={(e) => {
-            setFormData({ ...formData, district: e.target.value });
+            setFormData({ ...formData, mat_short_desc: e.target.value });
           }}
           label="Material Short Description"
+        />
+
+        {/*         Material Long Description */}
+
+        <SlInput
+          required
+          value={formData.mat_long_desc}
+          maxlength={1000}
+          onSlInput={(e) => {
+            setFormData({ ...formData, mat_long_desc: e.target.value });
+          }}
+          label="Material Long Description"
         />
 
         {/*         GR Processing Time  */}
@@ -439,6 +575,62 @@ function Form() {
           }}
           label="HSN Code"
         />
+
+        {/*         Serial Number Profile */}
+        <SlSelect
+          required
+          label="Serial Number Profile"
+          onSlChange={(e) => {
+            setFormData({ ...formData, serial_no_profile: e.target.value });
+          }}
+        >
+          {serialNoProfile?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.serial_no_profile}>
+                {item.serial_no_profile}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
+        {/*         Quality Inspection Type */}
+        <SlSelect
+          required
+          label="Quality Inspection Type"
+          onSlChange={(e) => {
+            setFormData({ ...formData, quality_insp_type: e.target.value });
+          }}
+        >
+          {qualityInspType?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.quality_insp_type}>
+                {item.quality_insp_type}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
+        {/*         Valuation Type */}
+
+
+        <SlSelect
+          required
+          label="Valuation Type/ Price Control"
+          onSlChange={(e) => {
+            setFormData({ ...formData, valuation_type: e.target.value });
+          }}
+        >
+          {valuationType?.map((item, i) => {
+            return (
+              <SlMenuItem key={`cg${i}`} value={item.price_control_desc}>
+                {item.price_control_desc}
+              </SlMenuItem>
+            );
+          })}
+        </SlSelect>
+
+
+
 
 
 
