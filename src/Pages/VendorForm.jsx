@@ -709,7 +709,7 @@ function Form() {
             value={formData.gstin}
             onSlInput={(e) => {
               validCheck(e.target.name, e.target.value);
-              setFormData({ ...formData, gstin: e.target.value });
+              setFormData({ ...formData, gstin: e.target.value, pan: e.target.value?.slice(2, 12) });
             }}
           />
         )}
