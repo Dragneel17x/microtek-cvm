@@ -643,11 +643,12 @@ function Form() {
           variant="success"
           onClick={(e) => {
             console.log(formData);
+            return
             //setConfirmDialog(true
-/*             const formDatas = new FormData();
+             const formDatas = new FormData();
             Object.keys(formData).forEach((key) =>
               formDatas.append(key, formData[key])
-            ); */
+            ); 
             axios({
               method: "post",
               url: "${baseurl.base_url}/cvm/post-vendor-form-data",
@@ -762,6 +763,7 @@ function Form() {
           variant="primary"
           disabled={!declarationCheck}
           onClick={() => {
+            console.log(formData);
 /*             setConfirmDialog(false)
             const formDatas = new FormData();
             Object.keys(formData).forEach((key) =>
@@ -771,7 +773,7 @@ function Form() {
               method: "post",
               url: `${baseurl.base_url}/cvm/post-material-form-data`,
               header: {
-                "Content-type": "multipart/form-data",
+                "Content-type": "application/JSON",
               },
               data: formData,
             })
