@@ -102,7 +102,7 @@ function Form() {
       data,
     })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setValuationType(res?.data?.data)
       })
       .catch((err) => {
@@ -326,8 +326,8 @@ function Form() {
         >
           {matType?.map((item, i) => {
             return (
-              <SlMenuItem key={`cg${i}`} value={item.material_type}>
-                {item.material_type}
+              <SlMenuItem key={`cg${i}`} value={item.mat_desc}>
+                {item.mat_desc}
               </SlMenuItem>
             );
           })}
@@ -339,20 +339,25 @@ function Form() {
 
         </div> */}
 
-        <SlInput
-          className="helptext"
-          required
-          pattern="^[0-9]+$"
-          name="mat_logic_no"
-          helpText={error.mat_logic_no == true ? "" : "wrong entry"}
-          value={formData.mat_logic_no}
-          maxlength={18}
-          onSlInput={(e) => {
-            validCheck(e.target.name, e.target.value);
-            setFormData({ ...formData, mat_logic_no: e.target.value });
-          }}
-          label="Material Logic Number"
-        />
+        {formData.mat_type == 'ZPOP - Promotional Material ' || formData.mat_type == 'ZCON - Cosnumables Material ' || formData.mat_type == 'ZSPR - Spares Material ' || formData.mat_type == 'ZTND - Tools and Dies Material ' || formData.mat_type == 'ZMIS - Miscellaneous Material' || formData.mat_type == 'ZPKG - Packaging Material' ? ("") : (
+
+
+          <SlInput
+            className="helptext"
+            required
+            pattern="^[0-9]+$"
+            name="mat_logic_no"
+            helpText={error.mat_logic_no == true ? "" : "wrong entry"}
+            value={formData.mat_logic_no}
+            maxlength={18}
+            onSlInput={(e) => {
+              validCheck(e.target.name, e.target.value);
+              setFormData({ ...formData, mat_logic_no: e.target.value });
+            }}
+            label="Material Logic Number"
+          />
+        )}
+
         {/*         Plant DropDown List  */}
 
         <SlSelect
@@ -566,13 +571,16 @@ function Form() {
           helpText={error.hsn_code == true ? "" : "wrong entry"}
           name="hsn_code"
           onSlInput={(e) => {
-            setFormData({ ...formData, district: e.target.value });
+            validCheck(e.target.name, e.target.value);
+            setFormData({ ...formData, hsn_code: e.target.value });
           }}
           label="HSN Code"
         />
 
         {/*         Serial Number Profile */}
-        <SlSelect
+
+        {formData.mat_type == 'ZHLC - FG Health care Solutions' || formData.mat_type == 'ZPSD - FG Power Solutions ' || formData.mat_type == 'ZESD - FG Electrical Solutions'?
+        (        <SlSelect
           required
           label="Serial Number Profile"
           onSlChange={(e) => {
@@ -586,7 +594,8 @@ function Form() {
               </SlMenuItem>
             );
           })}
-        </SlSelect>
+        </SlSelect>):("")}
+
 
         {/*         Quality Inspection Type */}
         <SlSelect
@@ -663,19 +672,19 @@ function Form() {
 
         {/*         // Upload Button */}
 
-        <SlButton
+{/*         <SlButton
           onclick={() => {
             setOpen(true);
           }}
         >
           Upload file
-        </SlButton>
-        <SlDialog
+        </SlButton> */}
+{/*         <SlDialog
           label="Upload Files"
           open={open}
           onSlAfterHide={() => setOpen(false)}
-        >
-          <input
+        > */}
+          {/* <input
             style={{ marginBottom: "20px" }}
             type="file"
             name=""
@@ -701,26 +710,9 @@ function Form() {
             onChange={(e) => {
               setFormData({ ...formData, PAN_Image: e.target.files[0] });
             }}
-          />
-          {/*           <input
-            style={{ marginBottom: "20px" }}
-            type="file"
-            name=""
-            id=""
-            onChange={(e) => {
-              setFormData({ ...formData, declaration: e.target.files[0] });
-            }}
           /> */}
-          {/*           <input
-            style={{ marginBottom: "20px" }}
-            type="file"
-            name=""
-            id=""
-            onChange={(e) => {
-              setFormData({ ...formData, DAPF: e.target.files[0] });
-            }}
-          /> */}
-          <SlButton
+
+{/*           <SlButton
             style={{ marginRight: "20px" }}
             slot="footer"
             variant="success"
@@ -734,8 +726,8 @@ function Form() {
             onClick={() => setOpen(false)}
           >
             Close
-          </SlButton>
-        </SlDialog>
+          </SlButton> */}
+ {/*        </SlDialog> */}
       </form>
       <SlDialog
         label="Preview"
@@ -743,23 +735,24 @@ function Form() {
         onSlAfterHide={() => setConfirmDialog(false)}
       >
         <div>
-          <h4>Vendor Group: <span>{formData.vendor_group}</span></h4>
-          <h4>Vendor Name: <span>{formData.vendor_name} {formData.vendor_name_op1}</span></h4>
-          <h4>Vendor Address: <span>{formData.vendor_address} {formData.vendor_address_op1} {formData.vendor_address_op2} {formData.cust_address_op3}</span></h4>
-          <h4>District: <span>{formData.district}</span></h4>
-          <h4>City: <span>{formData.city}</span></h4>
-          <h4>Postal Code: <span>{formData.postal_code}</span></h4>
-          <h4>Country: <span>{formData.country}</span></h4>
-          <h4>Region Code: <span>{formData.state_code}</span></h4>
-          <h4>C/O Person: <span>{formData.co_person}</span></h4>
-          <h4>Company Code: <span>{formData.company_code}</span></h4>
-          <h4>Bank A/C No: <span>{formData.recon_acc}</span></h4>
-          <h4>PayTerm: <span>{formData.pay_term}</span></h4>
-          <h4>Mobile Number: <span>{formData.mobile_no}</span></h4>
-          <h4>E-mail ID: <span>{formData.email_id}</span></h4>
-          <h4>Company Code: <span>{formData.company_code}</span></h4>
-          <h4>GSTIN: <span>{formData.gstin}</span></h4>
-          <h4>PAN: <span>{formData.pan}</span></h4>
+          <h4>Material Type: <span>{formData.mat_type}</span></h4>
+          <h4>Material Logic Number: <span>{formData.mat_logic_no}</span></h4>
+          <h4>Plant: <span>{formData.plant_name}</span></h4>
+          <h4>Storage Location: <span>{formData.storage_location}</span></h4>
+          <h4>Sales Organization: <span>{formData.mat_sales_org}</span></h4>
+          <h4>Distribution Channel: <span>{formData.mat_dist_channel}</span></h4>
+          <h4>Material Short Description: <span>{formData.mat_short_desc}</span></h4>
+          <h4>Base Unit of Measure: <span>{formData.base_unit_measure}</span></h4>
+          <h4>Material Long Description: <span>{formData.mat_long_desc}</span></h4>
+          <h4>Material Group: <span>{formData.mat_grp}</span></h4>
+          <h4>Division: <span>{formData.mat_div}</span></h4>
+          <h4>Material Price Group: <span>{formData.mat_price_grp}</span></h4>
+          <h4>Purchase Group: <span>{formData.mat_purchase_grp}</span></h4>
+          <h4>GR Processing Time: <span>{formData.gr_proc_time}</span></h4>
+          <h4>HSN Code: <span>{formData.hsn_code}</span></h4>
+          <h4>Serial Number Profile: <span>{formData.serial_no_profile}</span></h4>
+          <h4>Quality Inspection Type: <span>{formData.quality_insp_type}</span></h4>
+          <h4>Valuation Type/ Price Control: <span>{formData.valuation_type}</span></h4>
         </div>
         <SlCheckbox checked={declarationCheck} onSlChange={e => { setDeclarationCheck(e.target.checked) }}>
           I hereby confirm that the information entered is true to the best of
@@ -770,18 +763,18 @@ function Form() {
           variant="primary"
           disabled={!declarationCheck}
           onClick={() => {
-            setConfirmDialog(false)
+/*             setConfirmDialog(false)
             const formDatas = new FormData();
             Object.keys(formData).forEach((key) =>
               formDatas.append(key, formData[key])
-            );
+            ); */
             axios({
               method: "post",
-              url: "${baseurl.base_url}/cvm/post-vendor-form-data",
+              url: `${baseurl.base_url}/cvm/post-material-form-data`,
               header: {
                 "Content-type": "multipart/form-data",
               },
-              data: formDatas,
+              data: formData,
             })
               .then((res) => {
                 console.log(res);

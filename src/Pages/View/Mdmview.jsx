@@ -6,15 +6,21 @@ import { baseurl } from "../../config/apiConfig";
 
 function Mdmview() {
 	useEffect(() => {
-		getForms();
+		getApprovalForms();
+		getVendorForms();
 	}, []);
 
-	const [approvals, setApprovals] = useState();
-	const [singleApproval, setSingleApproval] = useState();
-	const [approvalDialog, setApprovalDialog] = useState(false);
+	const [customerApprovals, setCustomerApprovals] = useState();
+	const [singleCustomerApproval, setSingleCustomerApproval] = useState();
+	const [customerApprovalDialog, setCustomerApprovalDialog] = useState(false);
 	const [sap_code, setSap_code] = useState("");
 
-	function getForms() {
+	const [vendorApprovals, setVendorApprovals] = useState();
+	const [singleVendorApproval, setSingleVendorApproval] = useState();
+	const [vendorApprovalDialog, setVendorApprovalDialog] = useState(false);
+
+
+	function getApprovalForms() {
 		axios({
 			method: "post",
 			url: `${baseurl.base_url}/cvm/get-mdm-view`,
@@ -25,18 +31,34 @@ function Mdmview() {
 		})
 			.then((res) => {
 				console.log(res.data.data);
-				setApprovals(res.data.data);
+				setCustomerApprovals(res.data.data);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}
-
-	function updateForm() {
+	function getVendorForms() {
+		axios({
+			method: "post",
+			url: `${baseurl.base_url}/cvm/get-vendor-mdm-view`,
+			//url: `${baseurl.base_url}/cvm/get-approval-forms`,
+			header: {
+				"Content-type": "application/JSON",
+			}
+		})
+			.then((res) => {
+				console.log(res.data.data);
+				setVendorApprovals(res.data.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+	function updateCustomerForm() {
 		const data = {
 			employee_id: localStorage.getItem('employee_id'),
 			sap_code: sap_code,
-			form_id: singleApproval.id
+			form_id: singleCustomerApproval.id
 		}
 		console.log(data);
 		axios({
@@ -50,28 +72,70 @@ function Mdmview() {
 		})
 			.then((res) => {
 				console.log(res.data);
-				setApprovalDialog(false)
-				getForms();
+				setCustomerApprovalDialog(false)
+				getApprovalForms();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+	function updateVendorForm() {
+		const data = {
+			employee_id: localStorage.getItem('employee_id'),
+			sap_code: sap_code,
+			form_id: singleVendorApproval.id
+		}
+		console.log(data);
+		axios({
+			method: "post",
+			url: `${baseurl.base_url}/cvm/add-vendor-sap-code`,
+			//url: `${baseurl.base_url}/cvm/get-approval-forms`,
+			header: {
+				"Content-type": "application/JSON",
+			},
+			data
+		})
+			.then((res) => {
+				console.log(res.data);
+				setCustomerApprovalDialog(false)
+				getApprovalForms();
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}
 
-	const options = {
+	const customerOptions = {
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
-			setSingleApproval(approvals[rowMeta.dataIndex]);
-			setApprovalDialog(true);
+			setSingleCustomerApproval(customerApprovals[rowMeta.dataIndex]);
+			setCustomerApprovalDialog(true);
 		},
 		selectableRowsHideCheckboxes: true
 	};
-	const columns = [
+	const customerColumns = [
 		{ name: "created_by", label: "Applied By" },
 		{ name: "customer_name", label: "Customer Name" },
 		{ name: "company_code", label: "Company Code" },
 		{ name: "mobile_no", label: "Mobile Number" },
 		{ name: "distribution_channel", label: "Distribution Channel" },
+		{ name: "email_id", label: "Email ID" },
+		{ name: "status", label: "Overall Status" },
+	];
+	const vendorOptions = {
+		onRowClick: function (rowData, rowMeta) {
+			console.log(rowMeta.dataIndex);
+			setSingleVendorApproval(vendorApprovals[rowMeta.dataIndex]);
+			setVendorApprovalDialog(true);
+		},
+		selectableRowsHideCheckboxes: true
+	};
+	const vendorColumns = [
+		{ name: "created_by", label: "Applied By" },
+		{ name: "vendor_name", label: "Vendor Name" },
+		{ name: "company_code", label: "Company Code" },
+		{ name: "mobile_no", label: "Mobile Number" },
+		{ name: "state", label: "State" },
 		{ name: "email_id", label: "Email ID" },
 		{ name: "status", label: "Overall Status" },
 	];
@@ -89,86 +153,86 @@ function Mdmview() {
 
 			<SlTabPanel name="customer_form">
 				<div>
-					<MUIDataTable options={options} title="Customer Forms View For MDM" data={approvals} columns={columns} />
-					<SlDialog label="Form Data" open={approvalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setApprovalDialog(false)}>
+					<MUIDataTable options={customerOptions} title="Submitted Forms View For MDM" data={customerApprovals} columns={customerColumns} />
+					<SlDialog label="Form Data" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 						<div>
 							<h4>
-								Customer Group: <span>{singleApproval?.customer_group}</span>
+								Customer Group: <span>{singleCustomerApproval?.customer_group}</span>
 							</h4>
 							<h4>
 								Customer Name:{" "}
 								<span>
-									{singleApproval?.customer_name} {singleApproval?.customer_name_op}
+									{singleCustomerApproval?.customer_name} {singleCustomerApproval?.customer_name_op}
 								</span>
 							</h4>
 							<h4>
 								Customer Address:{" "}
 								<span>
-									{singleApproval?.customer_address} {singleApproval?.customer_address_op1} {singleApproval?.customer_address_op2} {singleApproval?.customer_address_op3}
+									{singleCustomerApproval?.customer_address} {singleCustomerApproval?.customer_address_op1} {singleCustomerApproval?.customer_address_op2} {singleCustomerApproval?.customer_address_op3}
 								</span>
 							</h4>
 							<h4>
-								District: <span>{singleApproval?.district}</span>
+								District: <span>{singleCustomerApproval?.district}</span>
 							</h4>
 							<h4>
-								City: <span>{singleApproval?.city}</span>
+								City: <span>{singleCustomerApproval?.city}</span>
 							</h4>
 							<h4>
-								Postal Code: <span>{singleApproval?.postal_code}</span>
+								Postal Code: <span>{singleCustomerApproval?.postal_code}</span>
 							</h4>
 							<h4>
-								Country: <span>{singleApproval?.country}</span>
+								Country: <span>{singleCustomerApproval?.country}</span>
 							</h4>
 							<h4>
-								Region Code: <span>{singleApproval?.state_code}</span>
+								Region Code: <span>{singleCustomerApproval?.state_code}</span>
 							</h4>
 							<h4>
-								C/O Person: <span>{singleApproval?.co_person}</span>
+								C/O Person: <span>{singleCustomerApproval?.co_person}</span>
 							</h4>
 							<h4>
-								Company Code: <span>{singleApproval?.company_code}</span>
+								Company Code: <span>{singleCustomerApproval?.company_code}</span>
 							</h4>
 							<h4>
-								Reconciliation A/C: <span>{singleApproval?.recon_acc}</span>
+								Reconciliation A/C: <span>{singleCustomerApproval?.recon_acc}</span>
 							</h4>
 							<h4>
-								PayTerm: <span>{singleApproval?.pay_term}</span>
+								PayTerm: <span>{singleCustomerApproval?.pay_term}</span>
 							</h4>
 							<h4>
-								Sales Organization: <span>{singleApproval?.sales_org}</span>
+								Sales Organization: <span>{singleCustomerApproval?.sales_org}</span>
 							</h4>
 							<h4>
-								Distribution Channel: <span>{singleApproval?.dist_channel}</span>
+								Distribution Channel: <span>{singleCustomerApproval?.dist_channel}</span>
 							</h4>
 							<h4>
-								Division: <span>{singleApproval?.division}</span>
+								Division: <span>{singleCustomerApproval?.division}</span>
 							</h4>
 							<h4>
-								Transportation Zone: <span>{singleApproval?.transportation_zone}</span>
+								Transportation Zone: <span>{singleCustomerApproval?.transportation_zone}</span>
 							</h4>
 							<h4>
-								Mobile Number: <span>{singleApproval?.mobile_no}</span>
+								Mobile Number: <span>{singleCustomerApproval?.mobile_no}</span>
 							</h4>
 							<h4>
-								E-mail ID: <span>{singleApproval?.email_id}</span>
+								E-mail ID: <span>{singleCustomerApproval?.email_id}</span>
 							</h4>
 							<h4>
-								Company Code: <span>{singleApproval?.company_code}</span>
+								Company Code: <span>{singleCustomerApproval?.company_code}</span>
 							</h4>
 							<h4>
-								Sales-District: <span>{singleApproval?.sales_district}</span>
+								Sales-District: <span>{singleCustomerApproval?.sales_district}</span>
 							</h4>
 							<h4>
-								Customer Account Group: <span>{singleApproval?.customer_acc_group}</span>
+								Customer Account Group: <span>{singleCustomerApproval?.customer_acc_group}</span>
 							</h4>
 							<h4>
-								Sales Office and Delivery Plant: <span>{singleApproval?.sales_office}</span>
+								Sales Office and Delivery Plant: <span>{singleCustomerApproval?.sales_office}</span>
 							</h4>
 							<h4>
-								GSTIN: <span>{singleApproval?.gstin}</span>
+								GSTIN: <span>{singleCustomerApproval?.gstin}</span>
 							</h4>
 							<h4>
-								PAN: <span>{singleApproval?.pan_number}</span>
+								PAN: <span>{singleCustomerApproval?.pan_number}</span>
 							</h4>
 							<SlInput
 								maxlength={40}
@@ -180,14 +244,40 @@ function Mdmview() {
 								onSlInput={(e) => {
 									setSap_code(e.target.value);
 								}}
-								label="SAP Customer Part Code"
+								label="SAP Customer Code"
 							/>
 						</div>
-
-						<SlButton slot="footer" variant="success" style={{ marginRight: "20px" }} onClick={() => updateForm()}>
+						{sap_code ? <SlButton slot="footer" variant="success" style={{ marginRight: "20px" }} onClick={() => updateCustomerForm()}>
 							Update
+						</SlButton> : ""}
+
+						<SlButton slot="footer" variant="primary" onClick={() => setCustomerApprovalDialog(false)}>
+							Close
 						</SlButton>
-						<SlButton slot="footer" variant="primary" onClick={() => setApprovalDialog(false)}>
+					</SlDialog>
+				</div>
+			</SlTabPanel>
+			<SlTabPanel name="vendor_form">
+				<div>
+					<MUIDataTable options={vendorOptions} title="Vendor Forms View For MDM" data={vendorApprovals} columns={vendorColumns} />
+					<SlDialog label="Form Data" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
+						Data Dikhana Hai
+						<SlInput
+							maxlength={40}
+							className="helptext"
+							pattern="^([A-Z]|[a-z]| )+$"
+							name="cust_name_op1"
+							style={{ marginTop: "20px" }}
+							value={sap_code}
+							onSlInput={(e) => {
+								setSap_code(e.target.value);
+							}}
+							label="SAP Vendor Code"
+						/>
+						{sap_code ? <SlButton slot="footer" variant="success" style={{ marginRight: "20px" }} onClick={() => updateVendorForm()}>
+							Update
+						</SlButton> : ""}
+						<SlButton slot="footer" variant="primary" onClick={() => setVendorApprovalDialog(false)}>
 							Close
 						</SlButton>
 					</SlDialog>

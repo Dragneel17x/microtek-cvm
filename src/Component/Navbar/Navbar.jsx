@@ -97,21 +97,6 @@ function Navbar() {
 								>
 									Customer On-Boarding
 								</SlMenuItem> : ""}
-
-								<SlMenuItem
-									onClick={() => {
-										navigate("/approval");
-									}}
-								>
-									Approvals
-								</SlMenuItem>
-								<SlMenuItem
-									onClick={() => {
-										navigate("/view");
-									}}
-								>
-									View Submittions
-								</SlMenuItem>
 								{JSON.parse(localStorage.getItem('module_access')).cvm_vendor_form ? 
 								<SlMenuItem
 									onClick={() => {
@@ -136,6 +121,20 @@ function Navbar() {
 								>
 									MDM View
 								</SlMenuItem> :""}
+								<SlMenuItem
+									onClick={() => {
+										navigate("/approval");
+									}}
+								>
+									Approvals
+								</SlMenuItem>
+								<SlMenuItem
+									onClick={() => {
+										navigate("/view");
+									}}
+								>
+									View Submittions
+								</SlMenuItem>
 								
 							</SlMenu>
 						</SlDropdown>
