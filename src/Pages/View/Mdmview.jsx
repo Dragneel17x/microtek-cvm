@@ -332,7 +332,7 @@ function Mdmview() {
 								GSTIN: <span>{singleVendorApproval?.gstin}</span>
 							</h4>
 							<h4>
-								PAN: <span>{singleVendorApproval?.pan_number}</span>
+								PAN: <span>{singleVendorApproval?.pan}</span>
 							</h4>
 						</div>
 						<SlInput
