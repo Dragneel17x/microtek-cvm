@@ -643,19 +643,18 @@ function Form() {
           variant="success"
           onClick={(e) => {
             console.log(formData);
-            //setConfirmDialog(true);
-            return
-            const formDatas = new FormData();
+            //setConfirmDialog(true
+/*             const formDatas = new FormData();
             Object.keys(formData).forEach((key) =>
               formDatas.append(key, formData[key])
-            );
+            ); */
             axios({
               method: "post",
               url: "${baseurl.base_url}/cvm/post-vendor-form-data",
               header: {
                 "Content-type": "multipart/form-data",
               },
-              data: formDatas,
+              data: formData,
             })
               .then((res) => {
                 console.log(res);
