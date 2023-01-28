@@ -261,7 +261,80 @@ function Mdmview() {
 				<div>
 					<MUIDataTable options={vendorOptions} title="Vendor Forms View For MDM" data={vendorApprovals} columns={vendorColumns} />
 					<SlDialog label="Form Data" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
-						Data Dikhana Hai
+					<div>
+							<h4>
+								Vendor Group: <span>{singleVendorApproval?.vendor_group}</span>
+							</h4>
+							<h4>
+								Customer Name:{" "}
+								<span>
+									{singleVendorApproval?.vendor_name} {singleVendorApproval?.vendor_name_op1}
+								</span>
+							</h4>
+							<h4>
+								Customer Address:{" "}
+								<span>
+									{singleVendorApproval?.vendor_address} {singleVendorApproval?.vendor_address_op1} {singleVendorApproval?.vendor_address_op2} {singleVendorApproval?.vendor_address_op3}
+								</span>
+							</h4>
+							<h4>
+								District: <span>{singleVendorApproval?.district}</span>
+							</h4>
+							<h4>
+								City: <span>{singleVendorApproval?.city}</span>
+							</h4>
+							<h4>
+								Postal Code: <span>{singleVendorApproval?.postal_code}</span>
+							</h4>
+							<h4>
+								Country: <span>{singleVendorApproval?.country}</span>
+							</h4>
+							<h4>
+								Region Code: <span>{singleVendorApproval?.state_code}</span>
+							</h4>
+							<h4>
+								C/O Person: <span>{singleVendorApproval?.co_person}</span>
+							</h4>
+							<h4>
+								Company Code: <span>{singleVendorApproval?.company_code}</span>
+							</h4>
+							<h4>
+								Bank A/C: <span>{singleVendorApproval?.bank_acc_no}</span>
+							</h4>
+							<h4>
+								Name on Account: <span>{singleVendorApproval?.name_on_acc}</span>
+							</h4>
+							<h4>
+								Company Code: <span>{singleVendorApproval?.company_code}</span>
+							</h4>
+							<h4>
+								Purchasing Organization: <span>{singleVendorApproval?.purchasing_org}</span>
+							</h4>
+							<h4>
+								Division: <span>{singleCustomerApproval?.division}</span>
+							</h4>
+							<h4>
+								Witholding Tax: <span>{singleVendorApproval?.witholding_tax}</span>
+							</h4>
+							<h4>
+								Mobile Number: <span>{singleVendorApproval?.mobile_no}</span>
+							</h4>
+							<h4>
+								E-mail ID: <span>{singleVendorApproval?.email_id}</span>
+							</h4>
+							<h4>
+								Order Currency : <span>{singleVendorApproval?.order_currency}</span>
+							</h4>
+							<h4>
+								IFSC Code: <span>{singleVendorApproval?.ifsc_code}</span>
+							</h4>
+							<h4>
+								GSTIN: <span>{singleVendorApproval?.gstin}</span>
+							</h4>
+							<h4>
+								PAN: <span>{singleVendorApproval?.pan_number}</span>
+							</h4>
+						</div>
 						<SlInput
 							maxlength={40}
 							className="helptext"
