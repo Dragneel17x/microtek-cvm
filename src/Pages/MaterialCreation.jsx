@@ -295,7 +295,7 @@ function Form() {
   });
 
   const regexp = {
-    mat_logic_no: /^[0-9]+$/,
+    mat_logic_no: /^[0-9]{18}$/,
     gr_proc_time: /^[0-9]{3}$/,
     hsn_code: /^[0-9]{6}$/,
   };
@@ -345,7 +345,7 @@ function Form() {
           <SlInput
             className="helptext"
             required
-            pattern="^[0-9]+$"
+            pattern="^[0-9]{18}$"
             name="mat_logic_no"
             helpText={error.mat_logic_no == true ? "" : "wrong entry"}
             value={formData.mat_logic_no}
@@ -745,7 +745,7 @@ function Form() {
           <h4>Base Unit of Measure: <span>{formData.base_unit_measure}</span></h4>
           <h4>Material Long Description: <span>{formData.mat_long_desc}</span></h4>
           <h4>Material Group: <span>{formData.mat_grp}</span></h4>
-          <h4>Division: <span>{formData.mat_div}</span></h4>
+          <h4>Division: <span>{formData.mat_div}</span></h4> 
           <h4>Material Price Group: <span>{formData.mat_price_grp}</span></h4>
           <h4>Purchase Group: <span>{formData.mat_purchase_grp}</span></h4>
           <h4>GR Processing Time: <span>{formData.gr_proc_time}</span></h4>

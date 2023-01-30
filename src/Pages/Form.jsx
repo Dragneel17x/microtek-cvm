@@ -367,14 +367,14 @@ function Form() {
 	});
 
 	const regexp = {
-		co_person: /^([A-Z]|[a-z]| )+$/,
-		cust_name: /^([A-Z]|[a-z]| )+$/,
-		cust_name_op1: /^([A-Z]|[a-z]| )+$/,
-		postal_code: /^[0-9]+$/,
-		city: /^([A-Z]|[a-z]| )+$/,
+		co_person: /^([A-Z]|[a-z]| ){0,40}$/,
+		cust_name: /^([A-Z]|[a-z]| ){0,40}$/,
+		cust_name_op1: /^([A-Z]|[a-z]| ){0,40}$/,
+		postal_code: /^[0-9]{0,40}$/,
+		city: /^([A-Z]|[a-z]| ){0,40}$/,
 		ind_cust_num: /^[0-9]{10}$/,
 		local_cust_num: /^[0-9]{10}$/,
-		intl_cust_num: /^[0-9]+$/,
+		intl_cust_num: /^[0-9]{0,40}$/,
 		tan_number: /^.{10}$/,
 		gstin: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$/,
 		pan: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
@@ -476,7 +476,7 @@ function Form() {
 					<SlInput
 						className="helptext"
 						required
-						pattern="^([A-Z]|[a-z]| )+$"
+						pattern="^([A-Z]|[a-z]| ){0,40}$"
 						name="cust_name"
 						helpText={error.cust_name ? "" : "wrong entry"}
 						value={formData.cust_name}
@@ -490,7 +490,7 @@ function Form() {
 					<SlInput
 						maxlength={40}
 						className="helptext"
-						pattern="^([A-Z]|[a-z]| )+$"
+						pattern="^([A-Z]|[a-z]| ){0,40}$"
 						name="cust_name_op1"
 						helpText={error.cust_name_op1 ? "" : "wrong entry"}
 						value={formData.cust_name_op1}
@@ -561,7 +561,7 @@ function Form() {
 					{/*Postal Code*/}
 					<SlInput
 						className="helptext"
-						pattern="^[0-9]+$"
+						pattern="^[0-9]{0,40}$"
 						name="postal_code"
 						required
 						helpText={error.postal_code == true ? "" : "wrong entry"}
@@ -674,7 +674,7 @@ function Form() {
 					className="helptext"
 					name="co_person"
 					required
-					pattern="^([A-Z]|[a-z]| )+$"
+					pattern="^([A-Z]|[a-z]| ){0,40}$"
 					helpText={error.co_person == true ? "" : "wrong entry"}
 					value={formData.co_person}
 					onSlInput={(e) => {
@@ -731,7 +731,7 @@ function Form() {
 						name="intl_cust_num"
 						className="helptext"
 						helpText={error.intl_cust_num ? " " : "wrong entry"}
-						pattern="^[0-9]+$"
+						pattern="^[0-9]{0,40}$"
 						value={formData.mobile_no}
 						label="Mobile Number"
 						onSlInput={(e) => {
@@ -1262,3 +1262,6 @@ function Form() {
 }
 
 export default Form;
+
+
+// Removed ReDoS possibility by modifying the regex in code(replaced all + with {0,40})
