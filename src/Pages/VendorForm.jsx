@@ -866,8 +866,8 @@ function Form() {
       >
         <div>
           <h4 className = "view">Vendor Group: <span>{formData.vendor_group}</span></h4>
-          <h4 className = "view">Vendor Name: <span>{formData.vendor_name} " " {formData.vendor_name_op1}</span></h4>
-          <h4 className = "view">Vendor Address: <span>{formData.vendor_address} " " {formData.vendor_address_op1}" " {formData.vendor_address_op2}" " {formData.cust_address_op3}</span></h4>
+          <h4 className = "view">Vendor Name: <span>{formData.vendor_name}  {formData.vendor_name_op1}</span></h4>
+          <h4 className = "view">Vendor Address: <span>{formData.vendor_address}  {formData.vendor_address_op1} {formData.vendor_address_op2} {formData.cust_address_op3}</span></h4>
           <h4 className = "view">District: <span>{formData.district}</span></h4>
           <h4 className = "view">City: <span>{formData.city}</span></h4>
           <h4 className = "view">Postal Code: <span>{formData.postal_code}</span></h4>
