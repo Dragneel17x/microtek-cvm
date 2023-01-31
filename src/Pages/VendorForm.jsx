@@ -17,6 +17,7 @@ import { useQuery } from "react-query";
 import axios, { Axios } from "axios";
 import { useFetcher } from "react-router-dom";
 import { baseurl } from "../config/apiConfig";
+import { toast } from "react-toastify";
 function Form() {
   const [countryCodes, setCountryCodes] = useState();
   const [stateList, setStateList] = useState();
@@ -912,9 +913,17 @@ function Form() {
             })
               .then((res) => {
                 console.log(res);
+                toast.success("Form Submitted Succesfully")
               })
               .catch((err) => {
                 console.log(err);
+                if(err?.response?.data?.message){
+                  toast.error(err?.response?.data?.message)
+                }
+                else
+                {
+                  toast.error("Some Unexpected error occurred \n Please try again.")
+                }
               });
           }}
         >
