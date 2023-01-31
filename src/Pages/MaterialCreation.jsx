@@ -17,6 +17,8 @@ import { useQuery } from "react-query";
 import axios, { Axios } from "axios";
 import { useFetcher } from "react-router-dom";
 import { baseurl } from "../config/apiConfig";
+import { toast } from "react-toastify";
+
 
 function Form() {
   const [countryCodes, setCountryCodes] = useState();
@@ -777,10 +779,17 @@ function Form() {
               data: formData,
             })
               .then((res) => {
+                toast.success("Form Submitted Successfully")
                 console.log(res);
               })
               .catch((err) => {
                 console.log(err);
+                if (err?.response?.data?.message) {
+                  toast.error(err?.response?.data?.message)
+                }
+                else {
+                  toast.error("Some Un-Expected Error Occured \n Please Try After Some Time");
+                }
               });
           }}
         >
