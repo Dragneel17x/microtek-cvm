@@ -1161,79 +1161,82 @@ function Form() {
 					<h4>
 						Customer Group: <span>{formData.cust_group}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Customer Name:{" "}
 						<span>
 							{formData.cust_name} {formData.cust_name_op1}
 						</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Customer Address:{" "}
 						<span>
 							{formData.cust_address} {formData.cust_address_op1} {formData.cust_address_op2} {formData.cust_address_op3}
 						</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						District: <span>{formData.district}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						City: <span>{formData.city}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Postal Code: <span>{formData.postal_code}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Country: <span>{formData.country}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Region Code: <span>{formData.state_code}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						C/O Person: <span>{formData.co_person}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Company Code: <span>{formData.company_code}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Reconciliation A/C: <span>{formData.recon_acc}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						PayTerm: <span>{formData.pay_term}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Sales Organization: <span>{formData.sales_org}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Distribution Channel: <span>{formData.dist_channel}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Division: <span>{formData.division}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Transportation Zone: <span>{formData.transportation_zone}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Mobile Number: <span>{formData.mobile_no}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						E-mail ID: <span>{formData.email_id}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Company Code: <span>{formData.company_code}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Sales-District: <span>{formData.sales_district}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Customer Account Group: <span>{formData.customer_acc_group}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						Sales Office and Delivery Plant: <span>{formData.sales_office}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
 						GSTIN: <span>{formData.gstin}</span>
 					</h4>
-					<h4>
+					<h4 className = "view">
+						TAN: <span>{formData.tan_number}</span>
+					</h4>
+					<h4 className = "view">
 						PAN: <span>{formData.pan}</span>
 					</h4>
 				</div>

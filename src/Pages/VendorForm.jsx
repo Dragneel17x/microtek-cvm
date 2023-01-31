@@ -865,23 +865,28 @@ function Form() {
         onSlAfterHide={() => setConfirmDialog(false)}
       >
         <div>
-          <h4>Vendor Group: <span>{formData.vendor_group}</span></h4>
-          <h4>Vendor Name: <span>{formData.vendor_name} {formData.vendor_name_op1}</span></h4>
-          <h4>Vendor Address: <span>{formData.vendor_address} {formData.vendor_address_op1} {formData.vendor_address_op2} {formData.cust_address_op3}</span></h4>
-          <h4>District: <span>{formData.district}</span></h4>
-          <h4>City: <span>{formData.city}</span></h4>
-          <h4>Postal Code: <span>{formData.postal_code}</span></h4>
-          <h4>Country: <span>{formData.country}</span></h4>
-          <h4>Region Code: <span>{formData.state_code}</span></h4>
-          <h4>C/O Person: <span>{formData.co_person}</span></h4>
-          <h4>Company Code: <span>{formData.company_code}</span></h4>
-          <h4>Bank A/C No: <span>{formData.recon_acc}</span></h4>
-          <h4>PayTerm: <span>{formData.pay_term}</span></h4>
-          <h4>Mobile Number: <span>{formData.mobile_no}</span></h4>
-          <h4>E-mail ID: <span>{formData.email_id}</span></h4>
-          <h4>Company Code: <span>{formData.company_code}</span></h4>
-          <h4>GSTIN: <span>{formData.gstin}</span></h4>
-          <h4>PAN: <span>{formData.pan}</span></h4>
+          <h4 className = "view">Vendor Group: <span>{formData.vendor_group}</span></h4>
+          <h4 className = "view">Vendor Name: <span>{formData.vendor_name} " " {formData.vendor_name_op1}</span></h4>
+          <h4 className = "view">Vendor Address: <span>{formData.vendor_address} " " {formData.vendor_address_op1}" " {formData.vendor_address_op2}" " {formData.cust_address_op3}</span></h4>
+          <h4 className = "view">District: <span>{formData.district}</span></h4>
+          <h4 className = "view">City: <span>{formData.city}</span></h4>
+          <h4 className = "view">Postal Code: <span>{formData.postal_code}</span></h4>
+          <h4 className = "view">Country: <span>{formData.country}</span></h4>
+          <h4 className = "view">Region Code: <span>{formData.state_code}</span></h4>
+          <h4 className = "view">C/O Person: <span>{formData.co_person}</span></h4>
+          <h4 className = "view">Company Code: <span>{formData.company_code}</span></h4>
+          <h4 className = "view">Bank A/C No: <span>{formData.recon_acc}</span></h4>
+          <h4 className = "view">PayTerm: <span>{formData.pay_term}</span></h4>
+          <h4 className = "view">Mobile Number: <span>{formData.mobile_no}</span></h4>
+          <h4 className = "view">E-mail ID: <span>{formData.email_id}</span></h4>
+          <h4 className = "view">Company Code: <span>{formData.company_code}</span></h4>
+          <h4 className = "view">Purchasing Organization: <span>{formData.purchasing_org}</span></h4>
+          <h4 className = "view">Pay Term: <span>{formData.pay_term}</span></h4>
+          <h4 className = "view">Bank Account Number: <span>{formData.bank_acc_no}</span></h4>
+          <h4 className = "view">IFSC Code: <span>{formData.ifsc_code}</span></h4>
+          <h4 className = "view">Name on Account: <span>{formData.name_on_acc}</span></h4>
+          <h4 className = "view">GSTIN: <span>{formData.gstin}</span></h4>
+          <h4 className = "view">PAN: <span>{formData.pan}</span></h4>
         </div>
         <SlCheckbox checked={declarationCheck} onSlChange={e => { setDeclarationCheck(e.target.checked) }}>
           I hereby confirm that the information entered is true to the best of

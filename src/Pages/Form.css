@@ -42,3 +42,7 @@
 .helptext::part(form-control-help-text){
     color: rgb(245, 0, 0);
 }
+
+.view {
+    padding: 5px;
+}
