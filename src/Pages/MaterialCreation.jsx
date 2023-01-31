@@ -551,6 +551,7 @@ function Form() {
 
         <SlInput
           required
+          className="helptext"
           value={formData.gr_proc_time}
           maxlength={3}
           pattern="^[0-9]{3}$"
@@ -568,6 +569,7 @@ function Form() {
         <SlInput
           required
           value={formData.hsn_code}
+          className="helptext"
           maxlength={6}
           pattern="^[0-9]{6}$"
           helpText={error.hsn_code == true ? "" : "wrong entry"}
