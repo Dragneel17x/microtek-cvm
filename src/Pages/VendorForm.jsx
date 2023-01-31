@@ -699,7 +699,7 @@ function Form() {
         ) : formData.vendor_group == "ZIRM - Vendor Import - Raw Material" ? ("") : (
           <SlInput
             label="GSTIN"
-            pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z[0-9]$"
+            pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]([0-9]|[A-Z])Z([0-9]|[A-Z])$"
             required
             className="helptext"
             name="gstin"
