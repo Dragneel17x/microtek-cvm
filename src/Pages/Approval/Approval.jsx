@@ -213,7 +213,7 @@ function Approval() {
 	};
 	const vendor_columns = [
 		{ name: "applied_by", label: "Applied By" },
-		{ name: "customer_name", label: "Customer Name" },
+		{ name: "vendor_name", label: "Vendor Name" },
 		{ name: "company_code", label: "Company Code" },
 		{ name: "approval_id", label: "Approval ID" },
 		{ name: "request_id", label: "Request ID" },
