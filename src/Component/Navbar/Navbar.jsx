@@ -10,6 +10,7 @@ import twentyeightdays from "./templates/28daysTemplate.xlsx";
 import twentyninedays from "./templates/9daysTemplate.xlsx";
 import axios from "axios";
 import { baseurl } from "../../config/apiConfig";
+
 function Navbar() {
 	let navigate = useNavigate();
 	const [selectMonth, setSelectMonth] = useState(false);
@@ -89,7 +90,7 @@ function Navbar() {
 								Services
 							</SlButton>
 							<SlMenu>
-								{JSON.parse(localStorage.getItem('module_access')).cvm_customer_form ? 
+								{JSON.parse(localStorage.getItem('module_access'))?.cvm_customer_form ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/form");
@@ -97,7 +98,7 @@ function Navbar() {
 								>
 									Customer On-Boarding
 								</SlMenuItem> : ""}
-								{JSON.parse(localStorage.getItem('module_access')).cvm_vendor_form ? 
+								{JSON.parse(localStorage.getItem('module_access'))?.cvm_vendor_form ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/vendor-form");
@@ -105,7 +106,7 @@ function Navbar() {
 								>
 									Vendor Form
 								</SlMenuItem>:""}
-								{JSON.parse(localStorage.getItem('module_access')).cvm_material_creation_form ? 
+								{JSON.parse(localStorage.getItem('module_access'))?.cvm_material_creation_form ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/material-creation-form");
@@ -113,7 +114,7 @@ function Navbar() {
 								>
 									Material Creation Form
 								</SlMenuItem> :""}
-								{JSON.parse(localStorage.getItem('module_access')).cvm_mdm_view ? 
+								{JSON.parse(localStorage.getItem('module_access'))?.cvm_mdm_view ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/mdm-view");

@@ -97,7 +97,7 @@ function Approval() {
 		axios({
 			method: "post",
 			url: `${baseurl.base_url}/cvm/get-material-approval-forms`,
-			//url: `${baseurl.base_url}/cvm/get-approval-forms`,
+			//url: `http://localhost:8082/v1/api/cvm/get-material-approval-forms`,
 			header: {
 				"Content-type": "application/JSON",
 			},
@@ -122,6 +122,7 @@ function Approval() {
 		axios({
 			method: "post",
 			url: `${baseurl.base_url}/cvm/approve-material-form`,
+			//url: `http://localhost:8082/v1/api/cvm/approve-material-form`,
 			header: {
 				"Content-type": "application/JSON",
 			},
@@ -140,17 +141,18 @@ function Approval() {
 	const material_options = {
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
-			setSingleMaterialApproval(vendorApprovals[rowMeta.dataIndex]);
+			console.log(materialApprovals[rowMeta.dataIndex]);
+			setSingleMaterialApproval(materialApprovals[rowMeta.dataIndex]);
 			setMaterialApprovalDialog(true);
 		},
 	};
 	const material_columns = [
 		{ name: "applied_by", label: "Applied By" },
-		{ name: "customer_name", label: "Customer Name" },
-		{ name: "company_code", label: "Company Code" },
-		{ name: "approval_id", label: "Approval ID" },
-		{ name: "request_id", label: "Request ID" },
-		{ name: "request_type", label: "Request Type" },
+		{ name: "mat_short_desc", label: "Material Description" },
+		{ name: "hsn_code", label: "HSN Code" },
+		{ name: "dist_channel", label: "Distribution Channel" },
+		{ name: "sales_organization", label: "Sales Organization" },
+		{ name: "purchasing_grp", label: "Purchasing Group" },
 		{ name: "created_at", label: "Request Date" },
 	];
 

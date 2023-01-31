@@ -8,6 +8,7 @@ function Mdmview() {
 	useEffect(() => {
 		getApprovalForms();
 		getVendorForms();
+		getMaterialForms();
 	}, []);
 
 	const [customerApprovals, setCustomerApprovals] = useState();
@@ -18,6 +19,10 @@ function Mdmview() {
 	const [vendorApprovals, setVendorApprovals] = useState();
 	const [singleVendorApproval, setSingleVendorApproval] = useState();
 	const [vendorApprovalDialog, setVendorApprovalDialog] = useState(false);
+
+	const [materialApprovals, setMaterialApprovals] = useState();
+	const [singleMaterialApproval, setSingleMaterialApproval] = useState();
+	const [materialApprovalDialog, setMaterialApprovalDialog] = useState();
 
 
 	function getApprovalForms() {
@@ -49,6 +54,23 @@ function Mdmview() {
 			.then((res) => {
 				console.log(res.data.data);
 				setVendorApprovals(res.data.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+	function getMaterialForms() {
+		axios({
+			method: "post",
+			url: `${baseurl.base_url}/cvm/get-material-mdm-view`,
+			//url: `http://localhost:8082/v1/api/cvm/get-material-mdm-view`,
+			header: {
+				"Content-type": "application/JSON",
+			}
+		})
+			.then((res) => {
+				console.log(res.data.data);
+				setMaterialApprovals(res.data.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -97,8 +119,33 @@ function Mdmview() {
 		})
 			.then((res) => {
 				console.log(res.data);
-				setCustomerApprovalDialog(false)
-				getApprovalForms();
+				setVendorApprovalDialog(false)
+				getVendorForms();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+	function updateMaterialForm() {
+		const data = {
+			employee_id: localStorage.getItem('employee_id'),
+			sap_code: sap_code,
+			form_id: singleMaterialApproval.id
+		}
+		console.log(data);
+		axios({
+			method: "post",
+			url: `${baseurl.base_url}/cvm/add-material-sap-code`,
+			//url: `http://localhost:8082/v1/api/cvm/add-material-sap-code`,
+			header: {
+				"Content-type": "application/JSON",
+			},
+			data
+		})
+			.then((res) => {
+				console.log(res.data);
+				setMaterialApprovalDialog(false)
+				getMaterialForms();
 			})
 			.catch((err) => {
 				console.log(err);
@@ -139,21 +186,38 @@ function Mdmview() {
 		{ name: "email_id", label: "Email ID" },
 		{ name: "status", label: "Overall Status" },
 	];
+	const materialOptions = {
+		onRowClick: function (rowData, rowMeta) {
+			console.log(rowMeta.dataIndex);
+			setSingleMaterialApproval(materialApprovals[rowMeta.dataIndex]);
+			setMaterialApprovalDialog(true);
+		},
+		selectableRowsHideCheckboxes: true
+	};
+	const materialColumns = [
+		{ name: "created_by", label: "Applied By" },
+		{ name: "mat_short_desc", label: "Material Description" },
+		{ name: "sales_organization", label: "Sales Organization" },
+		{ name: "mat_group", label: "Material Group" },
+		{ name: "dist_channel", label: "Dist Channel" },
+		{ name: "division", label: "Division" },
+		{ name: "mat_type", label: "Material Type" },
+	];
 	return (
 		<SlTabGroup style={{ marginTop: "20px" }}>
 			<SlTab slot="nav" panel="customer_form">
-				Customer Form Approvals
+				Customer Form 
 			</SlTab>
 			<SlTab slot="nav" panel="vendor_form">
-				Vendor Form Approvals
+				Vendor Form 
 			</SlTab>
 			<SlTab slot="nav" panel="material_creation">
-				Material Creation Approvals
+				Material Creation 
 			</SlTab>
 
 			<SlTabPanel name="customer_form">
 				<div>
-					<MUIDataTable options={customerOptions} title="Submitted Forms View For MDM" data={customerApprovals} columns={customerColumns} />
+					<MUIDataTable options={customerOptions} title="Customer Forms View For MDM" data={customerApprovals} columns={customerColumns} />
 					<SlDialog label="Form Data" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 						<div>
 							<h4>
@@ -351,6 +415,34 @@ function Mdmview() {
 							Update
 						</SlButton> : ""}
 						<SlButton slot="footer" variant="primary" onClick={() => setVendorApprovalDialog(false)}>
+							Close
+						</SlButton>
+					</SlDialog>
+				</div>
+			</SlTabPanel>
+			<SlTabPanel name="material_creation">
+				<div>
+					<MUIDataTable options={materialOptions} title="Material Creation View For MDM" data={materialApprovals} columns={materialColumns} />
+					<SlDialog label="Form Data" open={materialApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setMaterialApprovalDialog(false)}>
+						<div>
+							Data Dikhana Hai
+						</div>
+						<SlInput
+							maxlength={40}
+							className="helptext"
+							pattern="^([A-Z]|[a-z]| )+$"
+							name="cust_name_op1"
+							style={{ marginTop: "20px" }}
+							value={sap_code}
+							onSlInput={(e) => {
+								setSap_code(e.target.value);
+							}}
+							label="SAP Material Code"
+						/>
+						{sap_code ? <SlButton slot="footer" variant="success" style={{ marginRight: "20px" }} onClick={() => updateMaterialForm()}>
+							Update
+						</SlButton> : ""}
+						<SlButton slot="footer" variant="primary" onClick={() => setMaterialApprovalDialog(false)}>
 							Close
 						</SlButton>
 					</SlDialog>

@@ -8,6 +8,7 @@ function View() {
 	useEffect(() => {
 		getCustomerApprovals();
 		getVendorApprovals();
+		getMaterialApprovals();
 	}, []);
 
 	const [customerApprovals, setCustomerApprovals] = useState();
@@ -17,6 +18,11 @@ function View() {
 	const [vendorApprovals, setVendorApprovals] = useState();
 	const [singleVendorApproval, setSingleVendorApproval] = useState();
 	const [vendorApprovalDialog, setVendorApprovalDialog] = useState();
+
+	const [materialApprovals, setMaterialApprovals] = useState();
+	const [singleMaterialApproval, setSingleMaterialApproval] = useState();
+	const [materialApprovalDialog, setMaterialApprovalDialog] = useState();
+
 
 	function getCustomerApprovals() {
 		const data = {
@@ -62,6 +68,28 @@ function View() {
 				console.log(err);
 			});
 	}
+	function getMaterialApprovals() {
+		const data = {
+			employee_id: localStorage.getItem("employee_id"),
+		};
+		console.log(data);
+		axios({
+			method: "post",
+			url: `${baseurl.base_url}/cvm/get-submission-material-view`,
+			//url: `http://localhost:8082/v1/api/cvm/get-submission-material-view`,
+			header: {
+				"Content-type": "application/JSON",
+			},
+			data,
+		})
+			.then((res) => {
+				console.log(res.data.data);
+				setMaterialApprovals(res.data.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
 	const customerOptions = {
 		onRowClick: function (rowData, rowMeta) {
@@ -97,21 +125,38 @@ function View() {
 		{ name: "ai_status", label: "Approval Status" },
 		{ name: "status", label: "Overall Status" },
 	];
+	const materialOptions = {
+		onRowClick: function (rowData, rowMeta) {
+			console.log(rowMeta.dataIndex);
+			setSingleMaterialApproval(materialApprovals[rowMeta.dataIndex]);
+			setMaterialApprovalDialog(true);
+		},
+		selectableRowsHideCheckboxes: true
+	};
+	const materialColumns = [
+		{ name: "created_by", label: "Applied By" },
+		{ name: "mat_short_desc", label: "Material Description" },
+		{ name: "sales_organization", label: "Sales Organization" },
+		{ name: "mat_group", label: "Material Group" },
+		{ name: "approver_employee_id", label: "Approver ID" },
+		{ name: "ai_status", label: "Approval Status" },
+		{ name: "status", label: "Overall Status" },
+	];
 	return (
 		<SlTabGroup style={{ marginTop: "20px" }}>
 			<SlTab slot="nav" panel="customer_form">
-				Customer Form Approvals
+				Customer Form 
 			</SlTab>
 			<SlTab slot="nav" panel="vendor_form">
-				Vendor Form Approvals
+				Vendor Form 
 			</SlTab>
 			<SlTab slot="nav" panel="material_creation">
-				Material Creation Approvals
+				Material Creation 
 			</SlTab>
 
 			<SlTabPanel name="customer_form">
 				<div>
-					<MUIDataTable options={customerOptions} title="Submitted Forms View" data={customerApprovals} columns={customerColumns} />
+					<MUIDataTable options={customerOptions} title="Customer Forms View" data={customerApprovals} columns={customerColumns} />
 					<SlDialog label="Form Data" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 						<div>
 							<h4>
@@ -206,12 +251,25 @@ function View() {
 			</SlTabPanel>
 			<SlTabPanel name="vendor_form">
 				<div>
-					<MUIDataTable options={vendorOptions} title="Submitted Forms View" data={vendorApprovals} columns={vendorColumns} />
+					<MUIDataTable options={vendorOptions} title="Vendor Forms View" data={vendorApprovals} columns={vendorColumns} />
 					<SlDialog label="Form Data" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
 						Data Dikhana Hai
 						<SlTag slot="footer" size="large" pill style={{ "marginRight": "20px" }} variant={singleVendorApproval?.status == 'pending' ? 'primary' : (singleVendorApproval?.status == 'rejected' ? 'danger' : 'success')}>{singleVendorApproval?.status}</SlTag>
 						<SlTag slot="footer" size="large" pill style={{ "marginRight": "20px" }} variant={singleVendorApproval?.ai_status == 'pending' ? 'primary' : (singleVendorApproval?.ai_status == 'rejected' ? 'danger' : singleVendorApproval?.ai_status == 'future_approval' ? 'neutral' : 'success')}>{singleVendorApproval?.ai_status}</SlTag>
 						<SlButton slot="footer" variant="primary" onClick={() => setVendorApprovalDialog(false)}>
+							Close
+						</SlButton>
+					</SlDialog>
+				</div>
+			</SlTabPanel>
+			<SlTabPanel name="material_creation">
+				<div>
+					<MUIDataTable options={materialOptions} title="Material Creation View" data={materialApprovals} columns={materialColumns} />
+					<SlDialog label="Form Data" open={materialApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setMaterialApprovalDialog(false)}>
+						Data Dikhana Hai
+						<SlTag slot="footer" size="large" pill style={{ "marginRight": "20px" }} variant={singleMaterialApproval?.status == 'pending' ? 'primary' : (singleMaterialApproval?.status == 'rejected' ? 'danger' : 'success')}>{singleMaterialApproval?.status}</SlTag>
+						<SlTag slot="footer" size="large" pill style={{ "marginRight": "20px" }} variant={singleMaterialApproval?.ai_status == 'pending' ? 'primary' : (singleMaterialApproval?.ai_status == 'rejected' ? 'danger' : singleMaterialApproval?.ai_status == 'future_approval' ? 'neutral' : 'success')}>{singleMaterialApproval?.ai_status}</SlTag>
+						<SlButton slot="footer" variant="primary" onClick={() => setMaterialApprovalDialog(false)}>
 							Close
 						</SlButton>
 					</SlDialog>
