@@ -557,6 +557,7 @@ function Form() {
           helpText={error.gr_proc_time == true ? "" : "wrong entry"}
           name="gr_proc_time"
           onSlInput={(e) => {
+            validCheck(e.target.value)
             setFormData({ ...formData, gr_proc_time: e.target.value });
           }}
           label="GR Processing Time"
