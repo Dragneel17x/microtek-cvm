@@ -240,82 +240,82 @@ function Approval() {
 						<MUIDataTable options={options} title="Customer Form Approvals" data={customerApprovals} columns={columns} />
 						<SlDialog label="Dialog" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 							<div>
-								<h4>
+								<h4 className = "view">
 									Customer Group: <span>{singleCustomerApproval?.customer_group}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Customer Name:{" "}
 									<span>
 										{singleCustomerApproval?.customer_name} {singleCustomerApproval?.customer_name_op}
 									</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Customer Address:{" "}
 									<span>
 										{singleCustomerApproval?.customer_address} {singleCustomerApproval?.customer_address_op1} {singleCustomerApproval?.customer_address_op2} {singleCustomerApproval?.customer_address_op3}
 									</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									District: <span>{singleCustomerApproval?.district}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									City: <span>{singleCustomerApproval?.city}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Postal Code: <span>{singleCustomerApproval?.postal_code}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Country: <span>{singleCustomerApproval?.country}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Region Code: <span>{singleCustomerApproval?.state_code}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									C/O Person: <span>{singleCustomerApproval?.co_person}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Company Code: <span>{singleCustomerApproval?.company_code}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Reconciliation A/C: <span>{singleCustomerApproval?.recon_acc}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									PayTerm: <span>{singleCustomerApproval?.pay_term}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Sales Organization: <span>{singleCustomerApproval?.sales_org}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Distribution Channel: <span>{singleCustomerApproval?.dist_channel}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Division: <span>{singleCustomerApproval?.division}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Transportation Zone: <span>{singleCustomerApproval?.transportation_zone}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Mobile Number: <span>{singleCustomerApproval?.mobile_no}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									E-mail ID: <span>{singleCustomerApproval?.email_id}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Company Code: <span>{singleCustomerApproval?.company_code}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Sales-District: <span>{singleCustomerApproval?.sales_district}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Customer Account Group: <span>{singleCustomerApproval?.customer_acc_group}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									Sales Office and Delivery Plant: <span>{singleCustomerApproval?.sales_office}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									GSTIN: <span>{singleCustomerApproval?.gstin}</span>
 								</h4>
-								<h4>
+								<h4 className = "view">
 									PAN: <span>{singleCustomerApproval?.pan_number}</span>
 								</h4>
 							</div>
