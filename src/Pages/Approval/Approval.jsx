@@ -73,6 +73,7 @@ function Approval() {
 			});
 	}
 	const options = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleCustomerApproval(customerApprovals[rowMeta.dataIndex]);
@@ -139,6 +140,7 @@ function Approval() {
 			});
 	}
 	const material_options = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			console.log(materialApprovals[rowMeta.dataIndex]);
@@ -205,6 +207,7 @@ function Approval() {
 			});
 	}
 	const vendor_options = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleVendorApproval(vendorApprovals[rowMeta.dataIndex]);
@@ -236,7 +239,7 @@ function Approval() {
 				</SlTab>
 
 				<SlTabPanel name="customer_form">
-					<div>
+					<div className="view-table">
 						<MUIDataTable options={options} title="Customer Form Approvals" data={customerApprovals} columns={columns} />
 						<SlDialog label="Dialog" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 							<div>
@@ -360,7 +363,7 @@ function Approval() {
 					</div>
 				</SlTabPanel>
 				<SlTabPanel name="vendor_form">
-					<div>
+					<div className="view-table">
 						<MUIDataTable options={vendor_options} title="Vendor Form Approvals" data={vendorApprovals} columns={vendor_columns} />
 						<SlDialog label="Dialog" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
 							Data Dikhana hai
@@ -404,7 +407,7 @@ function Approval() {
 					</div>
 				</SlTabPanel>
 				<SlTabPanel name="material_creation">
-					<div>
+					<div className="view-table">
 						<MUIDataTable options={material_options} title="Material Creation Approvals" data={materialApprovals} columns={material_columns} />
 						<SlDialog label="Dialog" open={materialApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setMaterialApprovalDialog(false)}>
 							Data Dikhana Hai

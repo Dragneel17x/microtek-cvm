@@ -311,12 +311,11 @@ function Form() {
   }
   return (
     <div className="content_main">
-      <form onSubmit={handleSubmit} className="form-main">
+      <form onSubmit={handleSubmit} >
 
 
-        {/*         Material Type Mapping */}
-
-        <SlSelect
+      <div className="form-main">
+      <SlSelect
           required
           label="Material Type"
           onSlChange={(e) => {
@@ -638,12 +637,16 @@ function Form() {
         </SlSelect>
 
 
+      </div>
+
+      
 
 
 
 
         <SlButton
           type="submit"
+          className="customer-submit-button"
           variant="success"
           onClick={(e) => {
             console.log(formData);

@@ -453,9 +453,10 @@ function Form() {
 	}
 	return (
 		<div className="content_main">
-			<form onSubmit={handleSubmit} className="form-main">
-				{/*         Customer Group Mapping */}
-				<SlSelect
+			<form onSubmit={handleSubmit} >
+			<div className="form-main">
+					{/*         Customer Group Mapping */}
+					<SlSelect
 					required
 					label="Select Customer Group"
 					value = {formData.cust_group}
@@ -472,7 +473,7 @@ function Form() {
 					})}
 				</SlSelect>
 				{/*         CUSTOMER NAME */}
-				<div className="input-field-main customer_name">
+			
 					<SlInput
 						className="helptext"
 						required
@@ -500,8 +501,8 @@ function Form() {
 						}}
 						label="Customer Name Optional"
 					/>
-				</div>
-				<div className="input-field-main customer_name">
+				
+				
 					<SlInput
 						required
 						value={formData.cust_address}
@@ -668,7 +669,7 @@ function Form() {
 							})}
 						</SlSelect>
 					)}
-				</div>
+				
 				{/*C/O Person*/}
 				<SlInput
 					className="helptext"
@@ -1070,8 +1071,17 @@ function Form() {
 							}}
 						/>
 					)}
-
-				<SlButton
+			<SlButton
+					onclick={() => {
+						setOpen(true);
+					}}
+				>
+					Upload file
+				</SlButton>
+				
+			</div>
+			<SlButton
+			className="customer-submit-button"
 					type="submit"
 					variant="success"
 					onClick={(e) => {
@@ -1082,17 +1092,12 @@ function Form() {
 				>
 					Continue
 				</SlButton>
+			</form>
+			
 
 				{/*         // Upload Button */}
 
-				<SlButton
-					onclick={() => {
-						setOpen(true);
-					}}
-				>
-					Upload file
-				</SlButton>
-			</form>
+				
 			<SlDialog label="Upload Files" open={open} onSlAfterHide={() => setOpen(false)}>
 				<h4>Blank Cheque</h4>
 				<input

@@ -98,14 +98,14 @@ function Navbar() {
 								>
 									Customer On-Boarding
 								</SlMenuItem> : ""}
-								{JSON.parse(localStorage.getItem('module_access'))?.cvm_vendor_form ? 
+								{/* {JSON.parse(localStorage.getItem('module_access'))?.cvm_vendor_form ? 
 								<SlMenuItem
 									onClick={() => {
 										navigate("/vendor-form");
 									}}
 								>
 									Vendor Form
-								</SlMenuItem>:""}
+								</SlMenuItem>:""} */}
 								{JSON.parse(localStorage.getItem('module_access'))?.cvm_material_creation_form ? 
 								<SlMenuItem
 									onClick={() => {

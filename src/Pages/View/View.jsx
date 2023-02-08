@@ -92,6 +92,7 @@ function View() {
 	}
 
 	const customerOptions = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleCustomerApproval(customerApprovals[rowMeta.dataIndex]);
@@ -109,6 +110,7 @@ function View() {
 		{ name: "status", label: "Overall Status" },
 	];
 	const vendorOptions = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleVendorApproval(vendorApprovals[rowMeta.dataIndex]);
@@ -126,6 +128,7 @@ function View() {
 		{ name: "status", label: "Overall Status" },
 	];
 	const materialOptions = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleMaterialApproval(materialApprovals[rowMeta.dataIndex]);
@@ -155,7 +158,7 @@ function View() {
 			</SlTab>
 
 			<SlTabPanel name="customer_form">
-				<div>
+				<div className="view-table">
 					<MUIDataTable options={customerOptions} title="Customer Forms View" data={customerApprovals} columns={customerColumns} />
 					<SlDialog label="Form Data" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 						<div>
@@ -250,7 +253,7 @@ function View() {
 				</div>
 			</SlTabPanel>
 			<SlTabPanel name="vendor_form">
-				<div>
+				<div className="view-table">
 					<MUIDataTable options={vendorOptions} title="Vendor Forms View" data={vendorApprovals} columns={vendorColumns} />
 					<SlDialog label="Form Data" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
 						Data Dikhana Hai
@@ -263,7 +266,7 @@ function View() {
 				</div>
 			</SlTabPanel>
 			<SlTabPanel name="material_creation">
-				<div>
+				<div className="view-table">
 					<MUIDataTable options={materialOptions} title="Material Creation View" data={materialApprovals} columns={materialColumns} />
 					<SlDialog label="Form Data" open={materialApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setMaterialApprovalDialog(false)}>
 						Data Dikhana Hai

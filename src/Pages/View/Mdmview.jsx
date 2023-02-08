@@ -153,6 +153,7 @@ function Mdmview() {
 	}
 
 	const customerOptions = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleCustomerApproval(customerApprovals[rowMeta.dataIndex]);
@@ -170,6 +171,7 @@ function Mdmview() {
 		{ name: "status", label: "Overall Status" },
 	];
 	const vendorOptions = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleVendorApproval(vendorApprovals[rowMeta.dataIndex]);
@@ -187,6 +189,7 @@ function Mdmview() {
 		{ name: "status", label: "Overall Status" },
 	];
 	const materialOptions = {
+		elevation:1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleMaterialApproval(materialApprovals[rowMeta.dataIndex]);
@@ -216,7 +219,7 @@ function Mdmview() {
 			</SlTab>
 
 			<SlTabPanel name="customer_form">
-				<div>
+				<div className="view-table" style={{padding:'1%'}}>
 					<MUIDataTable options={customerOptions} title="Customer Forms View For MDM" data={customerApprovals} columns={customerColumns} />
 					<SlDialog label="Form Data" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 						<div>
@@ -322,7 +325,7 @@ function Mdmview() {
 				</div>
 			</SlTabPanel>
 			<SlTabPanel name="vendor_form">
-				<div>
+				<div className="view-table" style={{padding:'1%'}}>
 					<MUIDataTable options={vendorOptions} title="Vendor Forms View For MDM" data={vendorApprovals} columns={vendorColumns} />
 					<SlDialog label="Form Data" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
 					<div>
@@ -421,7 +424,7 @@ function Mdmview() {
 				</div>
 			</SlTabPanel>
 			<SlTabPanel name="material_creation">
-				<div>
+				<div className="view-table" style={{padding:'1%'}}>
 					<MUIDataTable options={materialOptions} title="Material Creation View For MDM" data={materialApprovals} columns={materialColumns} />
 					<SlDialog label="Form Data" open={materialApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setMaterialApprovalDialog(false)}>
 						<div>
