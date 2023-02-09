@@ -231,9 +231,9 @@ function Approval() {
 				<SlTab slot="nav" panel="customer_form">
 					Customer Form Approvals
 				</SlTab>
-				<SlTab slot="nav" panel="vendor_form">
+				{/* <SlTab slot="nav" panel="vendor_form">
 					Vendor Form Approvals
-				</SlTab>
+				</SlTab> */}
 				<SlTab slot="nav" panel="material_creation">
 					Material Creation Approvals
 				</SlTab>
@@ -362,7 +362,7 @@ function Approval() {
 						</SlDialog>
 					</div>
 				</SlTabPanel>
-				<SlTabPanel name="vendor_form">
+				{/* <SlTabPanel name="vendor_form">
 					<div className="view-table">
 						<MUIDataTable options={vendor_options} title="Vendor Form Approvals" data={vendorApprovals} columns={vendor_columns} />
 						<SlDialog label="Dialog" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
@@ -405,7 +405,7 @@ function Approval() {
 							</SlButton>
 						</SlDialog>
 					</div>
-				</SlTabPanel>
+				</SlTabPanel> */}
 				<SlTabPanel name="material_creation">
 					<div className="view-table">
 						<MUIDataTable options={material_options} title="Material Creation Approvals" data={materialApprovals} columns={material_columns} />

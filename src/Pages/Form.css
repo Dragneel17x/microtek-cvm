@@ -65,3 +65,18 @@
 .view {
     padding: 5px;
 }
+
+.customer-form-data{
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    gap: 10px;
+}
+.cutomer-form-data-inner{
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    gap: 5px;
+    border-bottom: 1px solid rgb(215, 215, 215);
+
+}
