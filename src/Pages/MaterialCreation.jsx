@@ -742,24 +742,108 @@ function Form() {
         onSlAfterHide={() => setConfirmDialog(false)}
       >
         <div>
-          <h4 className = "view">Material Type: <span>{formData.mat_type}</span></h4>
-          <h4 className = "view">Material Logic Number: <span>{formData.mat_logic_no}</span></h4>
-          <h4 className = "view">Plant: <span>{formData.plant_name}</span></h4>
-          <h4 className = "view">Storage Location: <span>{formData.storage_location}</span></h4>
-          <h4 className = "view">Sales Organization: <span>{formData.mat_sales_org}</span></h4>
-          <h4 className = "view">Distribution Channel: <span>{formData.mat_dist_channel}</span></h4>
-          <h4 className = "view">Material Short Description: <span>{formData.mat_short_desc}</span></h4>
-          <h4 className = "view">Base Unit of Measure: <span>{formData.base_unit_measure}</span></h4>
-          <h4 className = "view">Material Long Description: <span>{formData.mat_long_desc}</span></h4>
-          <h4 className = "view">Material Group: <span>{formData.mat_grp}</span></h4>
-          <h4 className = "view">Division: <span>{formData.mat_div}</span></h4> 
-          <h4 className = "view">Material Price Group: <span>{formData.mat_price_grp}</span></h4>
-          <h4 className = "view">Purchase Group: <span>{formData.mat_purchase_grp}</span></h4>
-          <h4 className = "view">GR Processing Time: <span>{formData.gr_proc_time}</span></h4>
-          <h4 className = "view">HSN Code: <span>{formData.hsn_code}</span></h4>
-          <h4 className = "view">Serial Number Profile: <span>{formData.serial_no_profile}</span></h4>
-          <h4 className = "view">Quality Inspection Type: <span>{formData.quality_insp_type}</span></h4>
-          <h4 className = "view">Valuation Type/ Price Control: <span>{formData.valuation_type}</span></h4>
+        <div className="customer-form-data">
+							<div className="cutomer-form-data-inner">
+								<h4>Material Type:</h4>
+								<span>{formData.mat_type}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Material Logic Number: </h4>
+								<span>
+                {formData.mat_logic_no}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Plant Name: </h4>
+								<span>
+                {formData.plant_name}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Storage Location: </h4>
+								<span>
+                {formData.storage_location}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Sales Organization: </h4>
+								<span>
+                {formData.mat_sales_org}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Distribution Channel: </h4>
+								<span>
+                {formData.mat_dist_channel}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Material Short Description: </h4>
+								<span>
+                {formData.mat_short_desc}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Material Long Description: </h4>
+								<span>
+                {formData.mat_long_desc}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Material Division: </h4>
+								<span>
+                {formData.mat_div}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Material Price Group: </h4>
+								<span>
+                {formData.mat_price_grp}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Base Unit of Measure: </h4>
+								<span>
+                {formData.base_unit_measure}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Purchasing Group: </h4>
+								<span>
+                {formData.mat_purchase_grp}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>HSN Code: </h4>
+								<span>
+                {formData.hsn_code}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>GR Processing Time:</h4>
+								<span>
+                {formData.gr_proc_time}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Serial Number Profile:</h4>
+								<span>
+                {formData.serial_no_profile}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Quality Inspection Type:</h4>
+								<span>
+                {formData.quality_insp_type}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Valuation Type/Price Control"</h4>
+								<span>
+                {formData.price_control_desc}
+								</span>
+							</div>
+            </div>
         </div>
         <SlCheckbox checked={declarationCheck} onSlChange={e => { setDeclarationCheck(e.target.checked) }}>
           I hereby confirm that the information entered is true to the best of
@@ -770,6 +854,8 @@ function Form() {
           variant="primary"
           disabled={!declarationCheck}
           onClick={() => {
+            
+            setConfirmDialog(false)
             console.log(formData);
 /*             setConfirmDialog(false)
             const formDatas = new FormData();

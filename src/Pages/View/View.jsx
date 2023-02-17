@@ -259,6 +259,22 @@ function View() {
 								<span>{singleCustomerApproval?.pan_number}</span>
 							</div>
 							<div className="cutomer-form-data-inner">
+								<h4>Approver Name:</h4>
+								<span>{singleCustomerApproval?.approver_employee_name}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Approver Email Id:</h4>
+								<span>{singleCustomerApproval?.approver_mail_id}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Approver Mobile Number:</h4>
+								<span>{singleCustomerApproval?.approver_phone_number}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Remarks:</h4>
+								<span>{singleCustomerApproval?.approver_remarks}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
 								<h4>Approver Name</h4>
 								<span>{singleCustomerApproval?.approver_employee_name}</span>
 							</div>
@@ -275,25 +291,25 @@ function View() {
 								<span>{singleCustomerApproval?.approver_remarks}</span>
 							</div>
 							<div className="cutomer-form-data-inner">
-							<h4>Status At Approver's End:</h4>
-							<SlTag
-							slot="footer"
-							size="large"
-							
-							style={{maxWidth:'200px'}}
-							variant={
-								singleCustomerApproval?.ai_status == 'pending'
-									? 'primary'
-									: singleCustomerApproval?.ai_status == 'rejected'
-									? 'danger'
-									: singleCustomerApproval?.ai_status == 'future_approval'
-									? 'neutral'
-									: 'success'
-							}>
-							{singleCustomerApproval?.ai_status}
-						</SlTag>
+								<h4>Status At Approver's End:</h4>
+								<SlTag
+									slot="footer"
+									size="large"
+
+									style={{ maxWidth: '200px' }}
+									variant={
+										singleCustomerApproval?.ai_status == 'pending'
+											? 'primary'
+											: singleCustomerApproval?.ai_status == 'rejected'
+												? 'danger'
+												: singleCustomerApproval?.ai_status == 'future_approval'
+													? 'neutral'
+													: 'success'
+									}>
+									{singleCustomerApproval?.ai_status}
+								</SlTag>
 							</div>
-							
+
 						</div>
 
 						<SlTag
@@ -304,7 +320,7 @@ function View() {
 							variant={singleCustomerApproval?.status == 'pending' ? 'primary' : singleCustomerApproval?.status == 'rejected' ? 'danger' : 'success'}>
 							{singleCustomerApproval?.status}
 						</SlTag>
-					{/* 	<SlTag
+						{/* 	<SlTag
 							slot="footer"
 							size="large"
 							pill
@@ -343,7 +359,163 @@ function View() {
 				<div className="view-table">
 					<MUIDataTable options={materialOptions} title="Material Creation View" data={materialApprovals} columns={materialColumns} />
 					<SlDialog label="Form Data" open={materialApprovalDialog} style={{ '--width': '50vw' }} onSlAfterHide={() => setMaterialApprovalDialog(false)}>
-						Data Dikhana Hai
+						<div>
+							<div className="customer-form-data">
+								<div className="cutomer-form-data-inner">
+									<h4>Material Type:</h4>
+									<span>{singleMaterialApproval?.mat_type}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Material Logic Number: </h4>
+									<span>
+										{singleMaterialApproval?.mat_logic_no}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Plant Name: </h4>
+									<span>
+										{singleMaterialApproval?.plant_name}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Storage Location: </h4>
+									<span>
+										{singleMaterialApproval?.storage_location}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Sales Organization: </h4>
+									<span>
+										{singleMaterialApproval?.mat_sales_org}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Distribution Channel: </h4>
+									<span>
+										{singleMaterialApproval?.mat_dist_channel}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Material Short Description: </h4>
+									<span>
+										{singleMaterialApproval?.mat_short_desc}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Material Long Description: </h4>
+									<span>
+										{singleMaterialApproval?.mat_long_desc}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Material Division: </h4>
+									<span>
+										{singleMaterialApproval?.mat_div}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Material Price Group: </h4>
+									<span>
+										{singleMaterialApproval?.mat_price_grp}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Base Unit of Measure: </h4>
+									<span>
+										{singleMaterialApproval?.base_unit_measure}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Purchasing Group: </h4>
+									<span>
+										{singleMaterialApproval?.mat_purchase_grp}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>HSN Code: </h4>
+									<span>
+										{singleMaterialApproval?.hsn_code}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>GR Processing Time:</h4>
+									<span>
+										{singleMaterialApproval?.gr_proc_time}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Serial Number Profile:</h4>
+									<span>
+										{singleMaterialApproval?.serial_no_profile}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Quality Inspection Type:</h4>
+									<span>
+										{singleMaterialApproval?.quality_insp_type}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Valuation Type/Price Control"</h4>
+									<span>
+										{singleMaterialApproval?.price_control_desc}
+									</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Approver Name:</h4>
+									<span>{singleMaterialApproval?.approver_employee_name}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Approver Email Id:</h4>
+									<span>{singleMaterialApproval?.approver_mail_id}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Approver Mobile Number:</h4>
+									<span>{singleMaterialApproval?.approver_phone_number}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Remarks:</h4>
+									<span>{singleMaterialApproval?.approver_remarks}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Approver Name:</h4>
+									<span>{singleMaterialApproval?.approver_employee_name}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Approver Email Id:</h4>
+									<span>{singleMaterialApproval?.approver_mail_id}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Approver Mobile Number:</h4>
+									<span>{singleMaterialApproval?.approver_phone_number}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Remarks:</h4>
+									<span>{singleMaterialApproval?.approver_remarks}</span>
+								</div>
+								<div className="cutomer-form-data-inner">
+									<h4>Status At Approver's End:</h4>
+									<SlTag
+										slot="footer"
+										size="large"
+
+										style={{ maxWidth: '200px' }}
+										variant={
+											singleMaterialApproval?.ai_status == 'pending'
+												? 'primary'
+												: singleMaterialApproval?.ai_status == 'rejected'
+													? 'danger'
+													: singleMaterialApproval?.ai_status == 'future_approval'
+														? 'neutral'
+														: 'success'
+										}>
+										{singleMaterialApproval?.ai_status}
+									</SlTag>
+
+								</div>
+							</div>
+						</div>
+
 						<SlTag
 							slot="footer"
 							size="large"
@@ -361,10 +533,10 @@ function View() {
 								singleMaterialApproval?.ai_status == 'pending'
 									? 'primary'
 									: singleMaterialApproval?.ai_status == 'rejected'
-									? 'danger'
-									: singleMaterialApproval?.ai_status == 'future_approval'
-									? 'neutral'
-									: 'success'
+										? 'danger'
+										: singleMaterialApproval?.ai_status == 'future_approval'
+											? 'neutral'
+											: 'success'
 							}>
 							{singleMaterialApproval?.ai_status}
 						</SlTag>

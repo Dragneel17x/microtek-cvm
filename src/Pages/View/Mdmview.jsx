@@ -153,7 +153,7 @@ function Mdmview() {
 	}
 
 	const customerOptions = {
-		elevation:1,
+		elevation: 1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleCustomerApproval(customerApprovals[rowMeta.dataIndex]);
@@ -171,7 +171,7 @@ function Mdmview() {
 		{ name: "status", label: "Overall Status" },
 	];
 	const vendorOptions = {
-		elevation:1,
+		elevation: 1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleVendorApproval(vendorApprovals[rowMeta.dataIndex]);
@@ -189,7 +189,7 @@ function Mdmview() {
 		{ name: "status", label: "Overall Status" },
 	];
 	const materialOptions = {
-		elevation:1,
+		elevation: 1,
 		onRowClick: function (rowData, rowMeta) {
 			console.log(rowMeta.dataIndex);
 			setSingleMaterialApproval(materialApprovals[rowMeta.dataIndex]);
@@ -209,98 +209,129 @@ function Mdmview() {
 	return (
 		<SlTabGroup style={{ marginTop: "20px" }}>
 			<SlTab slot="nav" panel="customer_form">
-				Customer Form 
+				Customer Form
 			</SlTab>
 			<SlTab slot="nav" panel="vendor_form">
-				Vendor Form 
+				Vendor Form
 			</SlTab>
 			<SlTab slot="nav" panel="material_creation">
-				Material Creation 
+				Material Creation
 			</SlTab>
 
 			<SlTabPanel name="customer_form">
-				<div className="view-table" style={{padding:'1%'}}>
+				<div className="view-table" style={{ padding: '1%' }}>
 					<MUIDataTable options={customerOptions} title="Customer Forms View For MDM" data={customerApprovals} columns={customerColumns} />
 					<SlDialog label="Form Data" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
-						<div>
-							<h4 className = "view">
-								Customer Group: <span>{singleCustomerApproval?.customer_group}</span>
-							</h4>
-							<h4 className = "view">
-								Customer Name:{" "}
+						<div className="customer-form-data">
+						<div className="cutomer-form-data-inner">
+								<h4>Customer Group:</h4>
+								<span>{singleCustomerApproval?.customer_group}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Customer Name: </h4>
 								<span>
 									{singleCustomerApproval?.customer_name} {singleCustomerApproval?.customer_name_op}
 								</span>
-							</h4>
-							<h4 className = "view">
-								Customer Address:{" "}
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Customer Address: </h4>
 								<span>
-									{singleCustomerApproval?.customer_address} {singleCustomerApproval?.customer_address_op1} {singleCustomerApproval?.customer_address_op2} {singleCustomerApproval?.customer_address_op3}
+									{singleCustomerApproval?.customer_address} {singleCustomerApproval?.customer_address_op1} {singleCustomerApproval?.customer_address_op2}{' '}
+									{singleCustomerApproval?.customer_address_op3}
 								</span>
-							</h4>
-							<h4 className = "view">
-								District: <span>{singleCustomerApproval?.district}</span>
-							</h4>
-							<h4 className = "view">
-								City: <span>{singleCustomerApproval?.city}</span>
-							</h4>
-							<h4 className = "view"> className = "view"
-								Postal Code: <span>{singleCustomerApproval?.postal_code}</span>
-							</h4>
-							<h4 className = "view">
-								Country: <span>{singleCustomerApproval?.country}</span>
-							</h4>
-							<h4 className = "view">
-								Region Code: <span>{singleCustomerApproval?.state_code}</span>
-							</h4>
-							<h4 className = "view">
-								C/O Person: <span>{singleCustomerApproval?.co_person}</span>
-							</h4>
-							<h4 className = "view">
-								Company Code: <span>{singleCustomerApproval?.company_code}</span>
-							</h4>
-							<h4 className = "view">
-								Reconciliation A/C: <span>{singleCustomerApproval?.recon_acc}</span>
-							</h4>
-							<h4 className = "view">
-								PayTerm: <span>{singleCustomerApproval?.pay_term}</span>
-							</h4>
-							<h4 className = "view">
-								Sales Organization: <span>{singleCustomerApproval?.sales_org}</span>
-							</h4>
-							<h4 className = "view">
-								Distribution Channel: <span>{singleCustomerApproval?.dist_channel}</span>
-							</h4>
-							<h4 className = "view">
-								Division: <span>{singleCustomerApproval?.division}</span>
-							</h4>
-							<h4 className = "view">
-								Transportation Zone: <span>{singleCustomerApproval?.transportation_zone}</span>
-							</h4>
-							<h4 className = "view">
-								Mobile Number: <span>{singleCustomerApproval?.mobile_no}</span>
-							</h4>
-							<h4 className = "view">
-								E-mail ID: <span>{singleCustomerApproval?.email_id}</span>
-							</h4>
-							<h4 className = "view">
-								Company Code: <span>{singleCustomerApproval?.company_code}</span>
-							</h4>
-							<h4 className = "view">
-								Sales-District: <span>{singleCustomerApproval?.sales_district}</span>
-							</h4>
-							<h4 className = "view">
-								Customer Account Group: <span>{singleCustomerApproval?.customer_acc_group}</span>
-							</h4>
-							<h4 className = "view">
-								Sales Office and Delivery Plant: <span>{singleCustomerApproval?.sales_office}</span>
-							</h4>
-							<h4 className = "view">
-								GSTIN: <span>{singleCustomerApproval?.gstin}</span>
-							</h4>
-							<h4 className = "view">
-								PAN: <span>{singleCustomerApproval?.pan_number}</span>
-							</h4>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>District:</h4>
+								<span>{singleCustomerApproval?.district}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>City:</h4>
+								<span>{singleCustomerApproval?.city}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Postal Code:</h4>
+								<span>{singleCustomerApproval?.postal_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Country:</h4>
+								<span>{singleCustomerApproval?.country}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Region Code:</h4>
+								<span>{singleCustomerApproval?.state_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>C/O Person:</h4>
+								<span>{singleCustomerApproval?.co_person}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Company Code:</h4>
+								<span>{singleCustomerApproval?.company_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Reconciliation A/C:</h4>
+								<span>{singleCustomerApproval?.reconciliation_acc}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>PayTerm:</h4>
+								<span>{singleCustomerApproval?.pay_term}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Sales Organization:</h4>
+								<span>{singleCustomerApproval?.sales_org}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Distribution Channel:</h4>
+								<span>{singleCustomerApproval?.distribution_channel}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Division:</h4>
+								<span>{singleCustomerApproval?.division}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Transportation Zone:</h4>
+								<span>{singleCustomerApproval?.transportation_zone}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Mobile Number:</h4>
+								<span>{singleCustomerApproval?.mobile_no}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>E-mail ID:</h4>
+								<span>{singleCustomerApproval?.email_id}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Company Code:</h4>
+								<span>{singleCustomerApproval?.company_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Sales-District:</h4>
+								<span>{singleCustomerApproval?.sales_district}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Customer Account Group:</h4>
+								<span>{singleCustomerApproval?.customer_acc_grp}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Sales Office and Delivery Plant:</h4>
+								<span>{singleCustomerApproval?.sales_office}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>PAN:</h4>
+								<span>{singleCustomerApproval?.pan_number}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Approver Name:</h4>
+								<span>{singleCustomerApproval?.approver_employee_name}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Approver Email Id:</h4>
+								<span>{singleCustomerApproval?.approver_mail_id}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Approver Mobile Number:</h4>
+								<span>{singleCustomerApproval?.approver_phone_number}</span>
+							</div>
 							<SlInput
 								maxlength={40}
 								className="helptext"
@@ -325,82 +356,92 @@ function Mdmview() {
 				</div>
 			</SlTabPanel>
 			<SlTabPanel name="vendor_form">
-				<div className="view-table" style={{padding:'1%'}}>
+				<div className="view-table" style={{ padding: '1%' }}>
 					<MUIDataTable options={vendorOptions} title="Vendor Forms View For MDM" data={vendorApprovals} columns={vendorColumns} />
 					<SlDialog label="Form Data" open={vendorApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setVendorApprovalDialog(false)}>
-					<div>
-							<h4 className = "view">
-								Vendor Group: <span>{singleVendorApproval?.vendor_group}</span>
-							</h4>
-							<h4 className = "view">
-								Customer Name:{" "}
+						<div className="Vendor-form-data">
+							<div className="cutomer-form-data-inner">
+								<h4>Vendor Group:</h4>
+								<span>{singleVendorApproval?.vendor_group}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Vendor Name: </h4>
 								<span>
-									{singleVendorApproval?.vendor_name} {singleVendorApproval?.vendor_name_op1}
+									{singleVendorApproval?.vendor_name} {singleVendorApproval?.vendor_name_op}
 								</span>
-							</h4>
-							<h4 className = "view">
-								Customer Address:{" "}
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Vendor Address: </h4>
 								<span>
-									{singleVendorApproval?.vendor_address} {singleVendorApproval?.vendor_address_op1} {singleVendorApproval?.vendor_address_op2} {singleVendorApproval?.vendor_address_op3}
+									{singleVendorApproval?.vendor_address} {singleVendorApproval?.vendor_address_op1} {singleVendorApproval?.vendor_address_op2}{' '}
+									{singleVendorApproval?.vendor_address_op3}
 								</span>
-							</h4>
-							<h4 className = "view">
-								District: <span>{singleVendorApproval?.district}</span>
-							</h4>
-							<h4 className = "view">
-								City: <span>{singleVendorApproval?.city}</span>
-							</h4>
-							<h4 className = "view">
-								Postal Code: <span>{singleVendorApproval?.postal_code}</span>
-							</h4>
-							<h4 className = "view">
-								Country: <span>{singleVendorApproval?.country}</span>
-							</h4>
-							<h4 className = "view">
-								Region Code: <span>{singleVendorApproval?.state_code}</span>
-							</h4>
-							<h4 className = "view">
-								C/O Person: <span>{singleVendorApproval?.co_person}</span>
-							</h4>
-							<h4 className = "view">
-								Company Code: <span>{singleVendorApproval?.company_code}</span>
-							</h4>
-							<h4 className = "view">
-								Bank A/C: <span>{singleVendorApproval?.bank_acc_no}</span>
-							</h4>
-							<h4 className = "view">
-								Name on Account: <span>{singleVendorApproval?.name_on_acc}</span>
-							</h4>
-							<h4 className = "view">
-								Company Code: <span>{singleVendorApproval?.company_code}</span>
-							</h4>
-							<h4 className = "view">
-								Purchasing Organization: <span>{singleVendorApproval?.purchasing_org}</span>
-							</h4>
-							<h4 className = "view">
-								Division: <span>{singleCustomerApproval?.division}</span>
-							</h4>
-							<h4 className = "view">
-								Witholding Tax: <span>{singleVendorApproval?.witholding_tax}</span>
-							</h4>
-							<h4 className = "view">
-								Mobile Number: <span>{singleVendorApproval?.mobile_no}</span>
-							</h4>
-							<h4 className = "view">
-								E-mail ID: <span>{singleVendorApproval?.email_id}</span>
-							</h4>
-							<h4 className = "view">
-								Order Currency : <span>{singleVendorApproval?.order_currency}</span>
-							</h4>
-							<h4 className = "view">
-								IFSC Code: <span>{singleVendorApproval?.ifsc_code}</span>
-							</h4>
-							<h4 className = "view">
-								GSTIN: <span>{singleVendorApproval?.gstin}</span>
-							</h4>
-							<h4 className = "view">
-								PAN: <span>{singleVendorApproval?.pan}</span>
-							</h4>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>District:</h4>
+								<span>{singleVendorApproval?.district}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>City:</h4>
+								<span>{singleVendorApproval?.city}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Postal Code:</h4>
+								<span>{singleVendorApproval?.postal_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Country:</h4>
+								<span>{singleVendorApproval?.country}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Region Code/State Code:</h4>
+								<span>{singleVendorApproval?.state}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>C/O Person:</h4>
+								<span>{singleVendorApproval?.co_person}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Company Code:</h4>
+								<span>{singleVendorApproval?.company_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>PayTerm:</h4>
+								<span>{singleVendorApproval?.pay_term}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Mobile Number:</h4>
+								<span>{singleVendorApproval?.mobile_no}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Purchasing Organization:</h4>
+								<span>{singleVendorApproval?.purchasing_org}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Bank Account Number:</h4>
+								<span>{singleVendorApproval?.bank_acc_no}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>IFSC Code:</h4>
+								<span>{singleVendorApproval?.ifsc_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Name on Account:</h4>
+								<span>{singleVendorApproval?.name_on_acc}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Company Code:</h4>
+								<span>{singleVendorApproval?.company_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>PAN:</h4>
+								<span>{singleVendorApproval?.pan}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>GSTIN:</h4>
+								<span>{singleVendorApproval?.gstin}</span>
+							</div>
+
 						</div>
 						<SlInput
 							maxlength={40}
@@ -424,11 +465,114 @@ function Mdmview() {
 				</div>
 			</SlTabPanel>
 			<SlTabPanel name="material_creation">
-				<div className="view-table" style={{padding:'1%'}}>
+				<div className="view-table" style={{ padding: '1%' }}>
 					<MUIDataTable options={materialOptions} title="Material Creation View For MDM" data={materialApprovals} columns={materialColumns} />
 					<SlDialog label="Form Data" open={materialApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setMaterialApprovalDialog(false)}>
 						<div>
-							Data Dikhana Hai
+							<div>
+								<div className="customer-form-data">
+									<div className="cutomer-form-data-inner">
+										<h4>Material Type:</h4>
+										<span>{singleMaterialApproval?.mat_type}</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Material Logic Number: </h4>
+										<span>
+											{singleMaterialApproval?.mat_logic_no}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Plant Name: </h4>
+										<span>
+											{singleMaterialApproval?.plant_name}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Storage Location: </h4>
+										<span>
+											{singleMaterialApproval?.storage_location}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Sales Organization: </h4>
+										<span>
+											{singleMaterialApproval?.mat_sales_org}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Distribution Channel: </h4>
+										<span>
+											{singleMaterialApproval?.mat_dist_channel}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Material Short Description: </h4>
+										<span>
+											{singleMaterialApproval?.mat_short_desc}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Material Long Description: </h4>
+										<span>
+											{singleMaterialApproval?.mat_long_desc}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Material Division: </h4>
+										<span>
+											{singleMaterialApproval?.mat_div}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Material Price Group: </h4>
+										<span>
+											{singleMaterialApproval?.mat_price_grp}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Base Unit of Measure: </h4>
+										<span>
+											{singleMaterialApproval?.base_unit_measure}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Purchasing Group: </h4>
+										<span>
+											{singleMaterialApproval?.mat_purchase_grp}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>HSN Code: </h4>
+										<span>
+											{singleMaterialApproval?.hsn_code}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>GR Processing Time:</h4>
+										<span>
+											{singleMaterialApproval?.gr_proc_time}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Serial Number Profile:</h4>
+										<span>
+											{singleMaterialApproval?.serial_no_profile}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Quality Inspection Type:</h4>
+										<span>
+											{singleMaterialApproval?.quality_insp_type}
+										</span>
+									</div>
+									<div className="cutomer-form-data-inner">
+										<h4>Valuation Type/Price Control"</h4>
+										<span>
+											{singleMaterialApproval?.price_control_desc}
+										</span>
+									</div>
+								</div>
+							</div>
 						</div>
 						<SlInput
 							maxlength={40}

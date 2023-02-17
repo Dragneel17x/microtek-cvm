@@ -1163,88 +1163,106 @@ function Form() {
 			</SlDialog>
 			<SlDialog label="Preview" open={confirmDialog} onSlAfterHide={() => setConfirmDialog(false)}>
 				<div>
-					<h4>
-						Customer Group: <span>{formData.cust_group}</span>
-					</h4>
-					<h4 className = "view">
-						Customer Name:{" "}
-						<span>
-							{formData.cust_name} {formData.cust_name_op1}
-						</span>
-					</h4>
-					<h4 className = "view">
-						Customer Address:{" "}
-						<span>
-							{formData.cust_address} {formData.cust_address_op1} {formData.cust_address_op2} {formData.cust_address_op3}
-						</span>
-					</h4>
-					<h4 className = "view">
-						District: <span>{formData.district}</span>
-					</h4>
-					<h4 className = "view">
-						City: <span>{formData.city}</span>
-					</h4>
-					<h4 className = "view">
-						Postal Code: <span>{formData.postal_code}</span>
-					</h4>
-					<h4 className = "view">
-						Country: <span>{formData.country}</span>
-					</h4>
-					<h4 className = "view">
-						Region Code: <span>{formData.state_code}</span>
-					</h4>
-					<h4 className = "view">
-						C/O Person: <span>{formData.co_person}</span>
-					</h4>
-					<h4 className = "view">
-						Company Code: <span>{formData.company_code}</span>
-					</h4>
-					<h4 className = "view">
-						Reconciliation A/C: <span>{formData.recon_acc}</span>
-					</h4>
-					<h4 className = "view">
-						PayTerm: <span>{formData.pay_term}</span>
-					</h4>
-					<h4 className = "view">
-						Sales Organization: <span>{formData.sales_org}</span>
-					</h4>
-					<h4 className = "view">
-						Distribution Channel: <span>{formData.dist_channel}</span>
-					</h4>
-					<h4 className = "view">
-						Division: <span>{formData.division}</span>
-					</h4>
-					<h4 className = "view">
-						Transportation Zone: <span>{formData.transportation_zone}</span>
-					</h4>
-					<h4 className = "view">
-						Mobile Number: <span>{formData.mobile_no}</span>
-					</h4>
-					<h4 className = "view">
-						E-mail ID: <span>{formData.email_id}</span>
-					</h4>
-					<h4 className = "view">
-						Company Code: <span>{formData.company_code}</span>
-					</h4>
-					<h4 className = "view">
-						Sales-District: <span>{formData.sales_district}</span>
-					</h4>
-					<h4 className = "view">
-						Customer Account Group: <span>{formData.customer_acc_group}</span>
-					</h4>
-					<h4 className = "view">
-						Sales Office and Delivery Plant: <span>{formData.sales_office}</span>
-					</h4>
-					<h4 className = "view">
-						GSTIN: <span>{formData.gstin}</span>
-					</h4>
-					<h4 className = "view">
-						TAN: <span>{formData.tan_number}</span>
-					</h4>
-					<h4 className = "view">
-						PAN: <span>{formData.pan}</span>
-					</h4>
-				</div>
+			<div className="customer-form-data">
+							<div className="cutomer-form-data-inner">
+								<h4>Customer Group:</h4>
+								<span>{formData.cust_group}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Customer Name: </h4>
+								<span>
+									{formData.cust_name} {formData.cust_name_op}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Customer Address: </h4>
+								<span>
+									{formData.cust_address} {formData.cust_address_op1} {formData.cust_address_op2}{' '}
+									{formData.cust_address_op3}
+								</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>District:</h4>
+								<span>{formData.district}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>City:</h4>
+								<span>{formData.city}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Postal Code:</h4>
+								<span>{formData.postal_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Country:</h4>
+								<span>{formData.country}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Region Code:</h4>
+								<span>{formData.state_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>C/O Person:</h4>
+								<span>{formData.co_person}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Company Code:</h4>
+								<span>{formData.company_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Reconciliation A/C:</h4>
+								<span>{formData.recon_acc}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>PayTerm:</h4>
+								<span>{formData.pay_term}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Sales Organization:</h4>
+								<span>{formData.sales_org}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Distribution Channel:</h4>
+								<span>{formData.dist_channel}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Division:</h4>
+								<span>{formData.division}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Transportation Zone:</h4>
+								<span>{formData.transportation_zone}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Mobile Number:</h4>
+								<span>{formData.mobile_no}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>E-mail ID:</h4>
+								<span>{formData.email_id}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Company Code:</h4>
+								<span>{formData.company_code}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Sales-District:</h4>
+								<span>{formData.sales_district}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Customer Account Group:</h4>
+								<span>{formData.customer_acc_group}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>Sales Office and Delivery Plant:</h4>
+								<span>{formData.sales_office}</span>
+							</div>
+							<div className="cutomer-form-data-inner">
+								<h4>PAN:</h4>
+								<span>{formData.pan_number}</span>
+							</div>
+						</div>
+						</div>
 				<SlCheckbox
 					checked={declarationCheck}
 					onSlChange={(e) => {
