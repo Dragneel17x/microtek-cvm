@@ -290,6 +290,26 @@ function View() {
 								<h4>Remarks:</h4>
 								<span>{singleCustomerApproval?.approver_remarks}</span>
 							</div>
+							{singleCustomerApproval?.blank_cheque ? <div className="cutomer-form-data-inner">
+								<h4>Blank Cheque:</h4>
+								<span><a href={singleCustomerApproval?.blank_cheque} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.GST_Image ? <div className="cutomer-form-data-inner">
+								<h4>GST Document:</h4>
+								<span><a href={singleCustomerApproval?.GST_Image} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.PAN_Image ? <div className="cutomer-form-data-inner">
+								<h4>PAN Card:</h4>
+								<span><a href={singleCustomerApproval?.PAN_Image} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.declaration ? <div className="cutomer-form-data-inner">
+								<h4>Declaration:</h4>
+								<span><a href={singleCustomerApproval?.declaration} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.DAPF ? <div className="cutomer-form-data-inner">
+								<h4>DAPF:</h4>
+								<span><a href={singleCustomerApproval?.DAPF} target='_blank'>View Document</a></span>
+							</div> : null}
 							<div className="cutomer-form-data-inner">
 								<h4>Status At Approver's End:</h4>
 								<SlTag

@@ -223,7 +223,7 @@ function Mdmview() {
 					<MUIDataTable options={customerOptions} title="Customer Forms View For MDM" data={customerApprovals} columns={customerColumns} />
 					<SlDialog label="Form Data" open={customerApprovalDialog} style={{ "--width": "50vw" }} onSlAfterHide={() => setCustomerApprovalDialog(false)}>
 						<div className="customer-form-data">
-						<div className="cutomer-form-data-inner">
+							<div className="cutomer-form-data-inner">
 								<h4>Customer Group:</h4>
 								<span>{singleCustomerApproval?.customer_group}</span>
 							</div>
@@ -332,6 +332,26 @@ function Mdmview() {
 								<h4>Approver Mobile Number:</h4>
 								<span>{singleCustomerApproval?.approver_phone_number}</span>
 							</div>
+							{singleCustomerApproval?.blank_cheque ? <div className="cutomer-form-data-inner">
+								<h4>Blank Cheque:</h4>
+								<span><a href={singleCustomerApproval?.blank_cheque} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.GST_Image ? <div className="cutomer-form-data-inner">
+								<h4>GST Document:</h4>
+								<span><a href={singleCustomerApproval?.GST_Image} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.PAN_Image ? <div className="cutomer-form-data-inner">
+								<h4>PAN Card:</h4>
+								<span><a href={singleCustomerApproval?.PAN_Image} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.declaration ? <div className="cutomer-form-data-inner">
+								<h4>Declaration:</h4>
+								<span><a href={singleCustomerApproval?.declaration} target='_blank'>View Document</a></span>
+							</div> : null}
+							{singleCustomerApproval?.DAPF ? <div className="cutomer-form-data-inner">
+								<h4>DAPF:</h4>
+								<span><a href={singleCustomerApproval?.DAPF} target='_blank'>View Document</a></span>
+							</div> : null}
 							<SlInput
 								maxlength={40}
 								className="helptext"
@@ -441,7 +461,6 @@ function Mdmview() {
 								<h4>GSTIN:</h4>
 								<span>{singleVendorApproval?.gstin}</span>
 							</div>
-
 						</div>
 						<SlInput
 							maxlength={40}
